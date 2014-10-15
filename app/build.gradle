@@ -31,5 +31,8 @@ dependencies {
     compile 'com.android.support:support-v4:20.0.0'
 
     androidTestCompile 'junit:junit:4.11'
-    androidTestCompile 'org.robolectric:robolectric:2.3'
+    androidTestCompile ('org.robolectric:robolectric:2.3') {
+        exclude module: 'commons-logging'
+        exclude module: 'httpclient'
+    }
 }
