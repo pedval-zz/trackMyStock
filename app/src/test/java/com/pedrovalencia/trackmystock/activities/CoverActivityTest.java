@@ -22,10 +22,10 @@ public class CoverActivityTest  {
 
     @Test
     public void testElementsInActivity() throws Exception {
-        /*Activity activity = Robolectric.buildActivity(CoverActivity.class).create().get();
-        TextView coverTextView = (TextView) activity.findViewById(R.id.fullscreen_content);*/
+        Activity activity = Robolectric.buildActivity(CoverActivity.class).create().get();
+        TextView coverTextView = (TextView) activity.findViewById(R.id.fullscreen_content);
 
-        assertTrue(true);
+        assertTrue(coverTextView.getText().equals(activity.getString(R.string.dummy_content)));
 
     }
 
