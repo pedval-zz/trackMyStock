@@ -60,7 +60,7 @@ public class CoverActivity extends Activity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             //Destroy the current activity. We don't want it in the stack
-            //this.finish();
+            this.finish();
         }
     }
 }
