@@ -3,7 +3,10 @@
 
     <string name="app_name">TrackMyStock</string>
     <string name="dummy_button">Dummy Button</string>
-    <!--main title text-->
+    <!-- main title text -->
     <string name="main_title_text">TrackMyStock</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
