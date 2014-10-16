@@ -39,16 +39,18 @@ public class CoverActivityTest  {
                 coverTextView.getText().equals(activity.getString(R.string.main_title_text)));
         assertTrue("Wrong cover text color",
                 coverTextView.getCurrentTextColor() == activity.getResources().getColor(R.color.main_text_color));
-
     }
 
     @Test
     public void goToNextActivity() throws Exception {
+        //Create the activity and simulate the onResume() event.
         ActivityController activityController = Robolectric.buildActivity(CoverActivity.class).create().start().resume();
 
+        //Test the activity is not null
         Activity activity = (Activity)activityController.get();
         assertTrue("Activity is null", activity != null);
 
+        //Test we move to next activity (MainActivity) from onResume() event.
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
         assertTrue("Type of activity is not MainActivity class: "+intent.getComponent().getClassName(),
                 intent.getComponent().getClassName().equals(MainActivity.class.getCanonicalName()));
