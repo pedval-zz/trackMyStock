@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.pedrovalencia.trackmystock"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 20
         versionCode 1
         versionName "1.0"

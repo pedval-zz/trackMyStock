@@ -1,5 +1,7 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
+    <!-- main text color -->
+    <color name="main_text_color">#339999</color>
 
 </resources>

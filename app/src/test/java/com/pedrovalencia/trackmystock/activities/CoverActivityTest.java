@@ -5,6 +5,8 @@ import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
@@ -20,13 +22,32 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class CoverActivityTest  {
 
-    @Test
-    public void testElementsInActivity() throws Exception {
-        Activity activity = Robolectric.buildActivity(CoverActivity.class).create().get();
-        TextView coverTextView = (TextView) activity.findViewById(R.id.fullscreen_content);
+    private Activity activity;
 
-        assertTrue(coverTextView.getText().equals(activity.getString(R.string.dummy_content)));
+    @Before
+    public void setUp() throws Exception {
+        activity = Robolectric.buildActivity(CoverActivity.class).create().get();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        activity.finish();
+    }
+
+    @Test
+    public void testActivityNotNull() throws Exception {
+        assertTrue("Activity is null", activity != null);
+    }
+
+    @Test
+    public void testTextInActivity() throws Exception {
+        TextView coverTextView = (TextView) activity.findViewById(R.id.fullscreen_content);
+        assertTrue("Wrong cover text",
+                coverTextView.getText().equals(activity.getString(R.string.main_title_text)));
+        assertTrue("Wrong cover text color",
+                coverTextView.getCurrentTextColor() == activity.getResources().getColor(R.color.main_text_color));
 
     }
+
 
 }
