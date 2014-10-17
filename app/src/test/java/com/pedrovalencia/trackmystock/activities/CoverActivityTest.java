@@ -6,14 +6,11 @@ import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.util.ActivityController;
 
 import static org.junit.Assert.assertTrue;
@@ -31,6 +28,7 @@ public class CoverActivityTest  {
         assertTrue("Activity is null", activity != null);
     }
 
+
     @Test
     public void testTextInActivity() throws Exception {
         Activity activity = Robolectric.buildActivity(CoverActivity.class).create().get();
@@ -42,7 +40,7 @@ public class CoverActivityTest  {
     }
 
     @Test
-    public void goToNextActivity() throws Exception {
+    public void testGoToNextActivity() throws Exception {
         //Create the activity and simulate the onResume() event.
         ActivityController activityController = Robolectric.buildActivity(CoverActivity.class).create().start().resume();
 
@@ -54,6 +52,14 @@ public class CoverActivityTest  {
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
         assertTrue("Type of activity is not MainActivity class: "+intent.getComponent().getClassName(),
                 intent.getComponent().getClassName().equals(MainActivity.class.getCanonicalName()));
+    }
+
+    @Test
+    public void testInterruptedException() throws Exception {
+        //Create the activity and simulate the onResume() event.
+        ActivityController activityController = Robolectric.buildActivity(CoverActivity.class).create().start().resume();
+
+        
     }
 
 

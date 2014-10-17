@@ -10,17 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.pedrovalencia.trackmystock.R;
-import com.pedrovalencia.trackmystock.util.SystemUiHider;
-
-import java.io.IOException;
 
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- *
- * @see SystemUiHider
- */
 public class CoverActivity extends Activity {
 
     public static final int DELAY = 3000;
@@ -55,12 +46,11 @@ public class CoverActivity extends Activity {
             Thread.sleep(DELAY);
         } catch (InterruptedException ex) {
             Log.e(LOG_TAG, "Error while waiting for the delay "+DELAY +" milliseconds", ex);
-        } finally{
-            //Start new activity
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            //Destroy the current activity. We don't want it in the stack
-            this.finish();
         }
+        //Start new activity
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        //Destroy the current activity. We don't want it in the stack
+        this.finish();
     }
 }
