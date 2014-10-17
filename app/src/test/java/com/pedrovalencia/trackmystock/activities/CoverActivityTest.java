@@ -59,7 +59,7 @@ public class CoverActivityTest  {
         //Create the activity and simulate the onResume() event.
         ActivityController activityController = Robolectric.buildActivity(CoverActivity.class).create().start().resume();
 
-        
+
     }
 
 

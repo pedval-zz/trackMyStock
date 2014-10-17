@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -42,15 +42,16 @@ public class CoverActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            Thread.sleep(DELAY);
-        } catch (InterruptedException ex) {
-            Log.e(LOG_TAG, "Error while waiting for the delay "+DELAY +" milliseconds", ex);
-        }
-        //Start new activity
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        //Destroy the current activity. We don't want it in the stack
-        this.finish();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                Intent intent = new Intent(CoverActivity.this, MainActivity.class);
+                startActivity(intent);
+                //Destroy the current activity. We don't want it in the stack*/
+                CoverActivity.this.finish();
+            }
+        }, DELAY);
     }
 }
