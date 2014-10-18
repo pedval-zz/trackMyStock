@@ -4,4 +4,7 @@
     <!-- main text color -->
     <color name="main_text_color">#339999</color>
 
+    <color name="grey_700">#646464</color>
+
+
 </resources>

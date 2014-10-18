@@ -17,6 +17,20 @@
         <item name="android:textSize">50sp</item>
     </style>
 
+    <!--EmptyListActivity font style -->
+    <style name="EmptyListTextStyle">
+        <item name="android:fontFamily">"sans-serif"</item>
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+    </style>
+
+    <!--EmptyListActivity (plus symbol) font style -->
+    <style name="EmptyListPlusSymbolStyle">
+        <item name="android:fontFamily">"sans-serif"</item>
+        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+    </style>
+
 
 
 </resources>

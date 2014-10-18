@@ -51,15 +51,7 @@ public class CoverActivityTest  {
         //Test we move to next activity (MainActivity) from onResume() event.
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
         assertTrue("Type of activity is not MainActivity class: "+intent.getComponent().getClassName(),
-                intent.getComponent().getClassName().equals(MainActivity.class.getCanonicalName()));
-    }
-
-    @Test
-    public void testInterruptedException() throws Exception {
-        //Create the activity and simulate the onResume() event.
-        ActivityController activityController = Robolectric.buildActivity(CoverActivity.class).create().start().resume();
-
-
+                intent.getComponent().getClassName().equals(EmptyListActivity.class.getCanonicalName()));
     }
 
 

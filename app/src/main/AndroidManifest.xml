@@ -18,8 +18,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.EmptyListActivity"
             android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".activities.AddCompanyActivity"
+            android:label="@string/title_activity_add_company" >
         </activity>
     </application>
 
