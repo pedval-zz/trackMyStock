@@ -1,13 +1,9 @@
 package com.pedrovalencia.trackmystock.activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.WindowManager;
 
 import com.pedrovalencia.trackmystock.R;
 
@@ -21,7 +17,7 @@ public class CoverActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Block that hides the status bar
+        /*//Block that hides the status bar
         if(Build.VERSION.SDK_INT < 16) {
             //For version lower than Jellybean
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -35,7 +31,7 @@ public class CoverActivity extends Activity {
             // We should hide the action bar if the status bar is hiden as well
             ActionBar actionBar = getActionBar();
             actionBar.hide();
-        }
+        }*/
         setContentView(R.layout.activity_cover);
     }
 
