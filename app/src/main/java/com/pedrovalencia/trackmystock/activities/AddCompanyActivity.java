@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.adapters.CompanyAdapter;
 
 public class AddCompanyActivity extends ActionBarActivity {
-
-    private CompanyAdapter mCompanyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +19,9 @@ public class AddCompanyActivity extends ActionBarActivity {
 
         //Initialize adapter
         //TODO. The adapter must inject the companyList dynamically
-        mCompanyAdapter = new CompanyAdapter(this, R.layout.simple_company_item);
-
         //Link adapter to listView
-        ListView listView = (ListView)findViewById(R.id.add_company_list_view);
-        listView.setAdapter(mCompanyAdapter);
-
-
+        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.add_company_list_view);
+        autoCompleteTextView.setAdapter(new CompanyAdapter(this, R.layout.simple_company_item));
     }
 
 

@@ -9,18 +9,20 @@
     android:orientation="vertical"
     tools:context="com.pedrovalencia.trackmystock.activities.AddCompanyActivity">
 
-    <EditText
+    <!--<EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/add_company_edit_text"
         android:hint="@string/company_name_hint"
         android:textColorHint="@color/grey_700"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"/>-->
 
 
-    <ListView
+    <AutoCompleteTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/add_company_list_view"
-        android:divider="@null"></ListView>
+        android:hint="@string/company_name_hint"
+        android:textColorHint="@color/grey_700"
+        android:divider="@null"></AutoCompleteTextView>
 </LinearLayout>
