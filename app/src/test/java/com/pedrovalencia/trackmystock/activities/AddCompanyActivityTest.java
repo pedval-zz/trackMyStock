@@ -2,9 +2,12 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
 import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
 
@@ -101,6 +104,14 @@ public class AddCompanyActivityTest {
         //ListView
         assertTrue("Company list size does not match: (5): "+textView.getAdapter().getCount()
                 , textView.getAdapter().getCount() == 5);
+
+        //Test element in list
+        assertTrue("Element in position 3 is not Nextub: "+((TextView)textView.getAdapter().getView(3, null, null)).getText().toString(),
+                ((TextView)textView.getAdapter().getView(3, null, null)).getText().toString().equals("Nextub"));
+
+        assertTrue("Element in position 3 is not Nextub: "+ textView.getAdapter().getItem(3),
+                textView.getAdapter().getItem(3).equals("Nextub"));
+
 
         //TODO test when no results.
     }

@@ -1,9 +1,17 @@
 package com.pedrovalencia.trackmystock.adapters;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.TextView;
+
+
+import com.pedrovalencia.trackmystock.R;
+import com.pedrovalencia.trackmystock.activities.AddCompanyActivity;
 
 import java.util.ArrayList;
 
@@ -12,12 +20,16 @@ import java.util.ArrayList;
  */
 public class CompanyAdapter extends ArrayAdapter<String> implements Filterable{
 
-    private ArrayList<String> mResultList;
     private Filter mFilter;
+    private Context mContext;
+    private int layoutResourceId;
+    private ArrayList<String> mResultList;
+
 
     public CompanyAdapter(Context context, int resource) {
         super(context, resource);
-        mResultList = new ArrayList<String>();
+        this.mContext = context;
+        this.layoutResourceId = resource;
     }
 
     @Override
@@ -30,6 +42,7 @@ public class CompanyAdapter extends ArrayAdapter<String> implements Filterable{
                 if (query != null) {
                     // Retrieve the autocomplete results.
                     //TODO bring information dynamically
+                    mResultList = new ArrayList<String>();
                     mResultList.add("Google");
                     mResultList.add("Yahoo");
                     mResultList.add("Microsoft");
@@ -58,7 +71,36 @@ public class CompanyAdapter extends ArrayAdapter<String> implements Filterable{
     }
 
     @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if(convertView==null){
+            // inflate the layout
+            LayoutInflater inflater = ((AddCompanyActivity) mContext).getLayoutInflater();
+            convertView = inflater.inflate(layoutResourceId, parent, false);
+        }
+
+        // object item based on the position
+        String data = "";
+        if(mResultList != null && !mResultList.isEmpty()) {
+            data = mResultList.get(position);
+        }
+
+        // get the TextView and then set the text (item name) and tag (item ID) values
+        TextView textViewItem = (TextView) convertView.findViewById(R.id.company_item_text_view);
+        textViewItem.setText(data);
+
+        return convertView;
+
+    }
+
+    @Override
     public int getCount() {
         return mResultList.size();
     }
+
+    @Override
+    public String getItem(int index){
+        return mResultList.get(index);
+    }
+
 }

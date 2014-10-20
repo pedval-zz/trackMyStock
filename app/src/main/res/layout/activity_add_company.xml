@@ -24,5 +24,6 @@
         android:id="@+id/add_company_list_view"
         android:hint="@string/company_name_hint"
         android:textColorHint="@color/grey_700"
-        android:divider="@null"></AutoCompleteTextView>
+        android:divider="@null"
+        android:completionThreshold="3"></AutoCompleteTextView>
 </LinearLayout>
