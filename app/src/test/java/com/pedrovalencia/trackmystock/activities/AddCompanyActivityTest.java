@@ -2,6 +2,8 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
 import android.view.MenuInflater;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
 
@@ -78,5 +80,25 @@ public class AddCompanyActivityTest {
         menuItem.setItemId(0);
         activity.onOptionsItemSelected(menuItem);
         menuItem.click();
+    }
+
+    @Test
+    public void testElements() throws Exception {
+        Activity activity = (Activity)activityController.get();
+
+        //EditText
+        EditText editText = (EditText)activity.findViewById(R.id.add_company_edit_text);
+        assertTrue("Edit Text is null",
+                editText != null);
+        assertTrue("Edit Text hint does not match: " + editText.getHint().toString(),
+                editText.getHint().toString().equals("Company name"));
+        assertTrue("Edit Text hint colour does not match: " + editText.getHintTextColors().getDefaultColor(),
+                editText.getHintTextColors().getDefaultColor() == activity.getResources().getColor(R.color.grey_700));
+
+        //ListView
+        ListView listView = (ListView)activity.findViewById(R.id.add_company_list_view);
+        assertTrue("List view is null", listView != null);
+        assertTrue("List view length does not match (5): "+listView.getAdapter().getCount(),
+                listView.getAdapter().getCount() == 5);
     }
 }

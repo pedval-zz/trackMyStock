@@ -1,17 +1,36 @@
 package com.pedrovalencia.trackmystock.activities;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
 import com.pedrovalencia.trackmystock.R;
 
 public class AddCompanyActivity extends ActionBarActivity {
+
+    private ArrayAdapter<String> mCompanyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_company);
+
+        //TODO this list must be dynamic
+        String[] companyList = new String[] { "Google Inc.", "Yahoo Inc.", "Microsoft", "Nextub",
+                "TrackMyStock"};
+
+        //Initialize adapter
+        //TODO. The adapter must inject the companyList dynamically
+        mCompanyAdapter = new ArrayAdapter<String>(this, R.layout.simple_company_item, companyList);
+
+        //Link adapter to listView
+        ListView listView = (ListView)findViewById(R.id.add_company_list_view);
+        listView.setAdapter(mCompanyAdapter);
+
+
     }
 
 

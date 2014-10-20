@@ -15,4 +15,7 @@
     <string name="plus_symbol">+</string>
     <string name="title_activity_add_company">AddCompanyActivity</string>
 
+    <!-- Company name hint (AddCompanyActivity) -->
+    <string name="company_name_hint">Company name</string>
+
 </resources>
