@@ -115,4 +115,6 @@ public class EmptyListActivityTest {
 
     }
 
+    //TODO navigation to previous activity
+
 }

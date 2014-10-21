@@ -143,4 +143,6 @@ public class AddCompanyActivityTest {
 
         //TODO test when no results.
     }
+
+    //TODO navigation to previous activity
 }
