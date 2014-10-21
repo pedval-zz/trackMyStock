@@ -18,4 +18,7 @@
     <!-- Company name hint (AddCompanyActivity) -->
     <string name="company_name_hint">Company name</string>
 
+    <!-- Add company button text -->
+    <string name="add_company_accept_button">Accept</string>
+
 </resources>

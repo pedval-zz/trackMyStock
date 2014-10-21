@@ -2,11 +2,8 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
@@ -112,7 +109,22 @@ public class AddCompanyActivityTest {
         assertTrue("Element in position 3 is not Nextub: "+ textView.getAdapter().getItem(3),
                 textView.getAdapter().getItem(3).equals("Nextub"));
 
-
         //TODO test when no results.
+
+        //Button
+        Button button = (Button)activity.findViewById(R.id.add_company_button);
+        assertTrue("Button element is null", button != null);
+        assertTrue("Button text does not match: "+button.getText().toString(),
+                button.getText().toString().equals(activity.getResources().getString(R.string.add_company_accept_button)));
+
+        //Test the button is disabled when no result
+        textView.setText("");
+        assertTrue("Button is not disabled", !button.isEnabled());
+
+        //Test the button enabled when results
+        textView.setText("Goo");
+        textView.getOnItemClickListener().onItemClick(null, null, 0, 0);
+        assertTrue("Button is not enabled", button.isEnabled());
+
     }
 }

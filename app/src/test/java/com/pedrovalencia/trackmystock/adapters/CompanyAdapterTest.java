@@ -24,7 +24,8 @@ public class CompanyAdapterTest {
     public void testCreationAdapter() {
         Activity activity = Robolectric.buildActivity(AddCompanyActivity.class).create().get();
         CompanyAdapter companyAdapter = new CompanyAdapter(activity, R.layout.simple_company_item);
-
         assertTrue("CompanyAdapter is null", companyAdapter != null);
+
+        activity.finish();
     }
 }
