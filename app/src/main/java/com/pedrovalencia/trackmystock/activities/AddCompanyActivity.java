@@ -1,11 +1,13 @@
 package com.pedrovalencia.trackmystock.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.adapters.CompanyAdapter;
@@ -17,13 +19,19 @@ public class AddCompanyActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_company);
 
-        //Initialize adapter
-        //TODO. The adapter must inject the companyList dynamically
-        //Link adapter to listView
+        //Initialize adapter and link adapter to listView
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.add_company_list_view);
         autoCompleteTextView.setAdapter(new CompanyAdapter(this, R.layout.simple_company_item));
-    }
 
+        //Listener to enable the button when customer selects one company
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                findViewById(R.id.add_company_button).setEnabled(true);
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,5 +50,14 @@ public class AddCompanyActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Handles the Accept button to go to CompanyListActivity
+     * @param view
+     */
+    public void goToCompanyListActivity(View view) {
+        Intent intent = new Intent(this, CompanyListActivity.class);
+        startActivity(intent);
     }
 }

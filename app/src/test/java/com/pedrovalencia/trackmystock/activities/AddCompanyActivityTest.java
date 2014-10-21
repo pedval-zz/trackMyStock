@@ -1,11 +1,13 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.MenuInflater;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
-import com.pedrovalencia.trackmystock.R;
 
+import com.pedrovalencia.trackmystock.R;
 
 import org.junit.After;
 import org.junit.Before;
@@ -111,5 +113,34 @@ public class AddCompanyActivityTest {
 
         //TODO test when no results.
 
+        //Button
+        Button button = (Button)activity.findViewById(R.id.add_company_button);
+        assertTrue("Button element is null", button != null);
+        assertTrue("Button text does not match: "+button.getText().toString(),
+                button.getText().toString().equals(activity.getResources().getString(R.string.add_company_accept_button)));
+
+        //Test the button is disabled when no result
+        textView.setText("");
+        assertTrue("Button is not disabled", !button.isEnabled());
+
+        //Test the button enabled when results
+        textView.setText("Goo");
+        textView.getOnItemClickListener().onItemClick(null, null, 0, 0);
+        assertTrue("Button is not enabled", button.isEnabled());
+
+    }
+
+    @Test
+    public void testAcceptButtonBehaviour() throws Exception {
+        Activity activity = (Activity)activityController.get();
+
+        Button button = (Button)activity.findViewById(R.id.add_company_button);
+        button.performClick();
+
+        Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        assertTrue("Next activity is not CompanyListActivity: "+intent.getComponent().getClassName(),
+                intent.getComponent().getClassName().equals(CompanyListActivity.class.getCanonicalName()));
+
+        //TODO test when no results.
     }
 }

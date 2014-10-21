@@ -9,14 +9,6 @@
     android:orientation="vertical"
     tools:context="com.pedrovalencia.trackmystock.activities.AddCompanyActivity">
 
-    <!--<EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_company_edit_text"
-        android:hint="@string/company_name_hint"
-        android:textColorHint="@color/grey_700"
-        android:paddingBottom="10dp"/>-->
-
 
     <AutoCompleteTextView
         android:layout_width="match_parent"
@@ -25,5 +17,26 @@
         android:hint="@string/company_name_hint"
         android:textColorHint="@color/grey_700"
         android:divider="@null"
-        android:completionThreshold="3"></AutoCompleteTextView>
+        android:completionThreshold="3"
+        android:paddingBottom="10dp"></AutoCompleteTextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="30dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_company_button"
+            android:text="@string/add_company_accept_button"
+            android:enabled="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:onClick="goToCompanyListActivity"/>
+
+    </RelativeLayout>
+
+
 </LinearLayout>
