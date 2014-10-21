@@ -2,14 +2,10 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
 import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
-
 import com.pedrovalencia.trackmystock.R;
+
 
 import org.junit.After;
 import org.junit.Before;
@@ -114,5 +110,6 @@ public class AddCompanyActivityTest {
 
 
         //TODO test when no results.
+
     }
 }
