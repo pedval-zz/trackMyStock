@@ -1,5 +1,6 @@
 package com.pedrovalencia.trackmystock.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -32,7 +33,6 @@ public class AddCompanyActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -50,5 +50,14 @@ public class AddCompanyActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Handles the Accept button to go to CompanyListActivity
+     * @param view
+     */
+    public void goToCompanyListActivity(View view) {
+        Intent intent = new Intent(this, CompanyListActivity.class);
+        startActivity(intent);
     }
 }

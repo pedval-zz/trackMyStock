@@ -20,5 +20,6 @@
 
     <!-- Add company button text -->
     <string name="add_company_accept_button">Accept</string>
+    <string name="title_activity_company_list">CompanyListActivity</string>
 
 </resources>
