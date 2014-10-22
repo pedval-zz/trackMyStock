@@ -141,7 +141,12 @@
     </RelativeLayout>
 
     <!-- TODO Graphic -->
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/chart_layout"
+        android:orientation="vertical">
+    </LinearLayout>
 
 
 </LinearLayout>

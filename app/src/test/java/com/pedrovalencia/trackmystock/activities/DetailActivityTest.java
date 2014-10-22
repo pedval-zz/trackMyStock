@@ -2,8 +2,10 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
 import android.view.MenuInflater;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
 import com.pedrovalencia.trackmystock.R;
 
 import org.junit.After;
@@ -130,5 +132,9 @@ public class DetailActivityTest {
         //Low content
         TextView lowContent = (TextView)activity.findViewById(R.id.detail_fragment_low_content);
         assertNotNull("Low content does not exist", lowContent);
+
+        //Graphic
+        LinearLayout graphView = (LinearLayout)activity.findViewById(R.id.chart_layout);
+        assertNotNull("Historic chart does not exist", graphView);
     }
 }
