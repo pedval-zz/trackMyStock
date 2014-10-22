@@ -21,5 +21,13 @@
     <!-- Add company button text -->
     <string name="add_company_accept_button">Accept</string>
     <string name="title_activity_company_list">CompanyListActivity</string>
+    <string name="title_activity_detail">DetailActivity</string>
+
+    <!--DetailActivity elements -->
+    <string name="company_name">Name</string>
+    <string name="company_price">Price</string>
+    <string name="company_date">Last update</string>
+    <string name="company_high">High</string>
+    <string name="company_low">Low</string>
 
 </resources>

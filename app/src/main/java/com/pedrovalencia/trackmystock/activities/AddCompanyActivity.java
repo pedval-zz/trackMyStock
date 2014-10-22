@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
 import com.pedrovalencia.trackmystock.R;
-import com.pedrovalencia.trackmystock.adapters.CompanyAdapter;
+import com.pedrovalencia.trackmystock.adapters.CompanySearchAdapter;
 
 public class AddCompanyActivity extends ActionBarActivity {
 
@@ -21,7 +21,7 @@ public class AddCompanyActivity extends ActionBarActivity {
 
         //Initialize adapter and link adapter to listView
         AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.add_company_list_view);
-        autoCompleteTextView.setAdapter(new CompanyAdapter(this, R.layout.simple_company_item));
+        autoCompleteTextView.setAdapter(new CompanySearchAdapter(this, R.layout.simple_company_item));
 
         //Listener to enable the button when customer selects one company
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

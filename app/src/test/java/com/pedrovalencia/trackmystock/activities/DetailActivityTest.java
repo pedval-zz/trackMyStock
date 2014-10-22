@@ -2,7 +2,6 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
 import android.view.MenuInflater;
-import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
 
@@ -15,39 +14,43 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.tester.android.view.TestMenu;
 import org.robolectric.tester.android.view.TestMenuItem;
+import org.robolectric.util.ActivityController;
 
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by valenciap on 21/10/2014.
+ * Created by pedrovalencia on 22/10/14.
  */
-@Config(emulateSdk=18)
+@Config(emulateSdk = 18)
 @RunWith(RobolectricTestRunner.class)
-public class CompanyListActivityTest {
+public class DetailActivityTest {
 
-    private Activity activity;
+    private ActivityController activityController;
 
     @Before
     public void setUp() throws Exception {
-        activity = Robolectric.buildActivity(CompanyListActivity.class).attach().create().start().resume().get();
+        activityController = Robolectric.buildActivity(DetailActivity.class).create();
     }
 
     @After
     public void tearDown() throws Exception {
-        activity.finish();
+        activityController.destroy();
     }
 
     @Test
     public void testActivityNotNull() throws Exception {
+        Activity activity = (Activity)activityController.get();
         assertTrue("Activity is null", activity != null);
     }
 
     @Test
     public void testOnCreateOptionsMenu() throws Exception {
 
+        Activity activity = (Activity)activityController.get();
+
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.company_list, testMenu);
+        new MenuInflater(Robolectric.application).inflate(R.menu.detail, testMenu);
 
         activity.onCreateOptionsMenu(testMenu);
 
@@ -55,14 +58,16 @@ public class CompanyListActivityTest {
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
         assertTrue("First menu is not Settings: " + menuItem.getItemId(),
                 menuItem.getItemId() == R.id.action_settings);
+
     }
 
     @Test
     public void testOnOptionsItemSelected() throws Exception {
 
+        Activity activity = (Activity)activityController.get();
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
+        new MenuInflater(Robolectric.application).inflate(R.menu.detail, testMenu);
 
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
@@ -74,18 +79,4 @@ public class CompanyListActivityTest {
         activity.onOptionsItemSelected(menuItem);
         menuItem.click();
     }
-
-    @Test
-    public void testFragmentInActivity() throws Exception {
-        CompanyListActivity.PlaceholderFragment fragment = new CompanyListActivity.PlaceholderFragment();
-        assertTrue("Fragment is null", fragment != null);
-    }
-
-    @Test
-    public void testElementsInFragment() throws Exception {
-        ListView view = (ListView)activity.findViewById(R.id.company_list_fragment_list_view);
-        assertTrue("There is no ListView in the Fragment", view != null);
-    }
-
-    //TODO navigation to previous activity
 }

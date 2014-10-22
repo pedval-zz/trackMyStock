@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by pedrovalencia on 20/10/14.
  */
-public class CompanyAdapter extends ArrayAdapter<String> implements Filterable{
+public class CompanySearchAdapter extends ArrayAdapter<String> implements Filterable{
 
     private Filter mFilter;
     private Context mContext;
@@ -26,7 +26,7 @@ public class CompanyAdapter extends ArrayAdapter<String> implements Filterable{
     private ArrayList<String> mResultList;
 
 
-    public CompanyAdapter(Context context, int resource) {
+    public CompanySearchAdapter(Context context, int resource) {
         super(context, resource);
         this.mContext = context;
         this.layoutResourceId = resource;

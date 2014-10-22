@@ -18,13 +18,13 @@ import static org.junit.Assert.assertTrue;
  */
 @Config(emulateSdk = 18)
 @RunWith(RobolectricTestRunner.class)
-public class CompanyAdapterTest {
+public class CompanySearchAdapterTest {
 
     @Test
     public void testCreationAdapter() {
         Activity activity = Robolectric.buildActivity(AddCompanyActivity.class).create().get();
-        CompanyAdapter companyAdapter = new CompanyAdapter(activity, R.layout.simple_company_item);
-        assertTrue("CompanyAdapter is null", companyAdapter != null);
+        CompanySearchAdapter companySearchAdapter = new CompanySearchAdapter(activity, R.layout.simple_company_item);
+        assertTrue("CompanyAdapter is null", companySearchAdapter != null);
 
         activity.finish();
     }

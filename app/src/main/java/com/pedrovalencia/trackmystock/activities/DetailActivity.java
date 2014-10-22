@@ -1,6 +1,5 @@
 package com.pedrovalencia.trackmystock.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -9,19 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
-import com.pedrovalencia.trackmystock.adapters.CompanyListAdapter;
 
-
-public class CompanyListActivity extends ActionBarActivity {
+public class DetailActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_list);
+        setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -33,7 +28,7 @@ public class CompanyListActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.company_list, menu);
+        getMenuInflater().inflate(R.menu.detail, menu);
         return true;
     }
 
@@ -54,37 +49,14 @@ public class CompanyListActivity extends ActionBarActivity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private CompanyListAdapter companyListAdapter;
-        private ListView mListView;
-
         public PlaceholderFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_company_list, container, false);
-
-            //Get a reference to the ListView and attach the adapter to it
-            companyListAdapter = new CompanyListAdapter(getActivity(), null, 0);
-            mListView = (ListView) rootView.findViewById(R.id.company_list_fragment_list_view);
-            mListView.setAdapter(companyListAdapter);
-
-            //Attach onItemClickListener. This will be triggered everytime the customer clicks on
-            //one row
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    //TODO send the needed info to DetailActivity to get the proper info
-                }
-            });
-
-            //TODO REMOVE WHEN WE HAVE DYNAMIC DATA
-            Intent intent = new Intent(getActivity(), DetailActivity.class);
-            startActivity(intent);
-
+            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             return rootView;
         }
-
     }
 }
