@@ -110,6 +110,7 @@ public class AddCompanyActivityTest {
         assertTrue("Element in position 3 is not Nextub: "+ textView.getAdapter().getItem(3),
                 textView.getAdapter().getItem(3).equals("Nextub"));
 
+
         //TODO test when no results.
 
         //Button
@@ -140,5 +141,8 @@ public class AddCompanyActivityTest {
         assertTrue("Next activity is not CompanyListActivity: "+intent.getComponent().getClassName(),
                 intent.getComponent().getClassName().equals(CompanyListActivity.class.getCanonicalName()));
 
+        //TODO test when no results.
     }
+
+    //TODO navigation to previous activity
 }
