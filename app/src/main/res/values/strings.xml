@@ -31,4 +31,11 @@
     <string name="company_low">Low</string>
     <string name="company_historic">Historic</string>
 
+    <!--Settings elements -->
+    <string name="pref_historic_key">historic_range</string>
+    <string name="pref_historic_title">Select historic range</string>
+    <string name="pref_historic_week">Week</string>
+    <string name="pref_historic_month">Month</string>
+    <string name="pref_historic_default">week</string>
+
 </resources>

@@ -1,11 +1,11 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.MenuInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jjoe64.graphview.GraphView;
 import com.pedrovalencia.trackmystock.R;
 
 import org.junit.After;
@@ -15,12 +15,13 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.tester.android.view.TestMenu;
 import org.robolectric.tester.android.view.TestMenuItem;
 import org.robolectric.util.ActivityController;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by pedrovalencia on 22/10/14.
@@ -67,21 +68,21 @@ public class DetailActivityTest {
 
     @Test
     public void testOnOptionsItemSelected() throws Exception {
-
-        Activity activity = (Activity)activityController.get();
+        Activity activity = (Activity)activityController.start().resume().get();
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.detail, testMenu);
+        new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
 
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
-        //TODO test we go to SettingsActivity
         activity.onOptionsItemSelected(menuItem);
-        menuItem.click();
 
-        menuItem.setItemId(0);
-        activity.onOptionsItemSelected(menuItem);
-        menuItem.click();
+        //Test we move to SettingsActivity.
+        Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
+        assertTrue("Type of activity is not SettingsActivity class: "+shadowIntent.getComponent().getClassName(),
+                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));
+
     }
 
     @Test

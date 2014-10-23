@@ -1,0 +1,15 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Historic range list -->
+    <string-array name="pref_historic_entries">
+        <item>@string/pref_historic_week</item>
+        <item>@string/pref_historic_month</item>
+    </string-array>
+
+    <string-array name="pref_historic_values">
+        <item>week</item>
+        <item>month</item>
+    </string-array>
+
+</resources>

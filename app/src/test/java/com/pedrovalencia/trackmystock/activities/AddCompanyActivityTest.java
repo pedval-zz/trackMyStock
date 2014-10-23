@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.tester.android.view.TestMenu;
 import org.robolectric.tester.android.view.TestMenuItem;
 import org.robolectric.util.ActivityController;
@@ -68,20 +69,21 @@ public class AddCompanyActivityTest {
     @Test
     public void testOnOptionsItemSelected() throws Exception {
 
-        Activity activity = (Activity)activityController.get();
+        Activity activity = (Activity)activityController.start().resume().get();
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
         new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
 
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
-        //TODO test we go to SettingsActivity
         activity.onOptionsItemSelected(menuItem);
-        menuItem.click();
 
-        menuItem.setItemId(0);
-        activity.onOptionsItemSelected(menuItem);
-        menuItem.click();
+        //Test we move to SettingsActivity.
+        Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
+        assertTrue("Type of activity is not SettingsActivity class: "+shadowIntent.getComponent().getClassName(),
+                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));
+
     }
 
     @Test

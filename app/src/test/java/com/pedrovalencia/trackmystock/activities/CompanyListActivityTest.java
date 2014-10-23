@@ -1,6 +1,7 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.MenuInflater;
 import android.widget.ListView;
 
@@ -13,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.tester.android.view.TestMenu;
 import org.robolectric.tester.android.view.TestMenuItem;
 
@@ -66,13 +68,14 @@ public class CompanyListActivityTest {
 
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
-        //TODO test we go to SettingsActivity
         activity.onOptionsItemSelected(menuItem);
-        menuItem.click();
 
-        menuItem.setItemId(0);
-        activity.onOptionsItemSelected(menuItem);
-        menuItem.click();
+        //Test we move to SettingsActivity.
+        Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
+        //TODO uncomment when removing redirection from CompanyListActivity to DetailActivity
+        /*assertTrue("Type of activity is not SettingsActivity class: " + shadowIntent.getComponent().getClassName(),
+                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));*/
     }
 
     @Test

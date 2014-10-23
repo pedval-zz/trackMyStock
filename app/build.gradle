@@ -37,8 +37,8 @@ dependencies {
         exclude module: 'httpclient'
     }
 
+    //GraphView library
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.android.support:support-v4:20.0.0'
-    //GraphView library
     compile 'com.jjoe64:graphview:3.1.3'
 }
