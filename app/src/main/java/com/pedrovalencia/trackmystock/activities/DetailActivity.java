@@ -67,15 +67,19 @@ public class DetailActivity extends ActionBarActivity {
         }
 
         private void createChart(View rootView) {
-            // init example series data
-            GraphViewSeries exampleSeries = new GraphViewSeries(new GraphView.GraphViewData[] {
+
+            GraphView.GraphViewData[] data = new GraphView.GraphViewData[] {
                     new GraphView.GraphViewData(1, 2.0d)
                     , new GraphView.GraphViewData(2, 1.5d)
                     , new GraphView.GraphViewData(3, 2.5d)
                     , new GraphView.GraphViewData(4, 1.0d)
-            });
+            };
 
-            GraphView graphView = new LineGraphView(getActivity(), "GraphViewDemo");
+            // init example series data
+            GraphViewSeries exampleSeries = new GraphViewSeries(getActivity().getResources().getString(R.string.company_historic),
+                    new GraphViewSeries.GraphViewSeriesStyle(getResources().getColor(R.color.main_text_color), 3),data);
+
+            GraphView graphView = new LineGraphView(getActivity(), getActivity().getResources().getString(R.string.company_historic));
             //Data
             graphView.addSeries(exampleSeries);
             //Remove grid

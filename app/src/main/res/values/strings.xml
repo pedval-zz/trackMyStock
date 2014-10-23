@@ -29,5 +29,6 @@
     <string name="company_date">Last update</string>
     <string name="company_high">High</string>
     <string name="company_low">Low</string>
+    <string name="company_historic">Historic</string>
 
 </resources>
