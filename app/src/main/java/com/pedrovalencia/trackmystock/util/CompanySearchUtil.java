@@ -36,7 +36,7 @@ public class CompanySearchUtil {
         StringBuilder request =  new StringBuilder();
         request.append(REQUEST_PREFIX).append(query).append(REQUEST_POSTFIX);
 
-        try {
+        try{
             //Create the url from the request string
             URL url = new URL(request.toString());
 
@@ -51,7 +51,7 @@ public class CompanySearchUtil {
             while ((read = inReader.read(buff)) != -1) {
                 jsonResults.append(buff, 0, read);
             }
-        }  catch (IOException ex) {
+        } catch (IOException ex) {
             Log.e(LOG_TAG, "Error trying to connect to external API", ex);
             return companyList;
 

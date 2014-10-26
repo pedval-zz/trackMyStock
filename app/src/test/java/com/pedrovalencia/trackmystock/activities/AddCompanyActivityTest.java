@@ -99,6 +99,22 @@ public class AddCompanyActivityTest {
         assertTrue("Edit Text hint colour does not match: " + textView.getHintTextColors().getDefaultColor(),
                 textView.getHintTextColors().getDefaultColor() == activity.getResources().getColor(R.color.grey_700));
 
+
+        //Button
+        Button button = (Button)activity.findViewById(R.id.add_company_button);
+        assertTrue("Button element is null", button != null);
+        assertTrue("Button text does not match: "+button.getText().toString(),
+                button.getText().toString().equals(activity.getResources().getString(R.string.add_company_accept_button)));
+
+
+    }
+
+    @Test
+    public void testSearchWithResults() throws Exception {
+        Activity activity = (Activity)activityController.get();
+
+        //EditText
+        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
         //Try to get the list
         textView.setText("Goo");
         assertTrue("Company list size does not match: (10): "+textView.getAdapter().getCount()
@@ -110,23 +126,43 @@ public class AddCompanyActivityTest {
 
         assertTrue("Element in position 1 is not Google (code GOOGL): "+ textView.getAdapter().getItem(1),
                 textView.getAdapter().getItem(1).equals("Google Inc.(GOOGL)"));
+    }
 
+    @Test
+    public void testSearchWithNoResults() throws Exception {
+        Activity activity = (Activity)activityController.get();
 
+        //EditText
+        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
         //No result
         textView.setText("Eyb");
         assertTrue("Company list size does not match: (0): "+textView.getAdapter().getCount()
                 , textView.getAdapter().getCount() == 0);
+    }
 
+    @Test
+    public void testButtonIsDisabled() throws Exception {
+        Activity activity = (Activity)activityController.get();
 
+        //EditText
+        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
         //Button
         Button button = (Button)activity.findViewById(R.id.add_company_button);
-        assertTrue("Button element is null", button != null);
-        assertTrue("Button text does not match: "+button.getText().toString(),
-                button.getText().toString().equals(activity.getResources().getString(R.string.add_company_accept_button)));
 
         //Test the button is disabled when no result
         textView.setText("");
         assertTrue("Button is not disabled", !button.isEnabled());
+
+    }
+
+    @Test
+    public void testButtonIsEnabledWhenResults() throws Exception {
+        Activity activity = (Activity)activityController.get();
+
+        //EditText
+        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
+        //Button
+        Button button = (Button)activity.findViewById(R.id.add_company_button);
 
         //Test the button enabled when results
         textView.setText("Goo");
@@ -134,6 +170,7 @@ public class AddCompanyActivityTest {
         assertTrue("Button is not enabled", button.isEnabled());
 
     }
+
 
     @Test
     public void testAcceptButtonBehaviour() throws Exception {
