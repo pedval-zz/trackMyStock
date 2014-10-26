@@ -9,9 +9,10 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.activities.AddCompanyActivity;
+import com.pedrovalencia.trackmystock.domain.CompanySignature;
+import com.pedrovalencia.trackmystock.util.CompanySearchUtil;
 
 import java.util.ArrayList;
 
@@ -23,13 +24,14 @@ public class CompanySearchAdapter extends ArrayAdapter<String> implements Filter
     private Filter mFilter;
     private Context mContext;
     private int layoutResourceId;
-    private ArrayList<String> mResultList;
+    private ArrayList<CompanySignature> mResultList;
 
 
     public CompanySearchAdapter(Context context, int resource) {
         super(context, resource);
         this.mContext = context;
         this.layoutResourceId = resource;
+        mResultList = new ArrayList<CompanySignature>();
     }
 
     @Override
@@ -42,12 +44,7 @@ public class CompanySearchAdapter extends ArrayAdapter<String> implements Filter
                 if (query != null) {
                     // Retrieve the autocomplete results.
                     //TODO bring information dynamically
-                    mResultList = new ArrayList<String>();
-                    mResultList.add("Google");
-                    mResultList.add("Yahoo");
-                    mResultList.add("Microsoft");
-                    mResultList.add("Nextub");
-                    mResultList.add("TrackMyStock");
+                    mResultList = CompanySearchUtil.getCompany(query.toString());
 
                     // Assign the data to the FilterResults
                     filterResults.values = mResultList;
@@ -82,7 +79,8 @@ public class CompanySearchAdapter extends ArrayAdapter<String> implements Filter
         // object item based on the position
         String data = "";
         if(mResultList != null && !mResultList.isEmpty()) {
-            data = mResultList.get(position);
+            CompanySignature companySignature = mResultList.get(position);
+            data = companySignature.getName() + "(" + companySignature.getSymbol() + ")";
         }
 
         // get the TextView and then set the text (item name) and tag (item ID) values
@@ -100,7 +98,8 @@ public class CompanySearchAdapter extends ArrayAdapter<String> implements Filter
 
     @Override
     public String getItem(int index){
-        return mResultList.get(index);
+        CompanySignature companySignature = mResultList.get(index);
+        return companySignature.getName() + "(" + companySignature.getSymbol() + ")";
     }
 
 }

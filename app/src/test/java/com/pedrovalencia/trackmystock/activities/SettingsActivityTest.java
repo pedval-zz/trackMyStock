@@ -1,10 +1,8 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
+import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
-
-import com.pedrovalencia.trackmystock.R;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,17 +42,25 @@ public class SettingsActivityTest {
     }
 
     @Test
-    public void testWhenSelectWeek() throws Exception {
-        SettingsActivity activity = (SettingsActivity)activityController.get();
+    public void testElements() throws Exception {
+        SettingsActivity activity = (SettingsActivity)activityController.start().resume().get();
 
         assertNotNull("SettingsActivity is null", activity);
-        String historic_key = activity.getString(R.string.pref_historic_key);
-        Preference preference = activity.findPreference(historic_key);
-        //activity.onPreferenceChange(preference,"month");
-        String historic_value =
-                PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString("historic_range","");
-        /*assertTrue("Historic range values does not match: "+historic_value,
-                historic_value.equals("week"));*/
+
+        Preference preference = activity.findPreference("historic_range");
+        assertNotNull("Preference object is null", preference);
+        assertTrue("Preference is not instance of ListPreference", preference instanceof ListPreference);
+
+        ListPreference listPreference = (ListPreference)preference;
+
+        //Week
+        int prefIndex = listPreference.findIndexOfValue("week");
+        assertTrue("Index of week element is not 0", prefIndex == 0);
+
+        //Month
+        prefIndex = listPreference.findIndexOfValue("month");
+        assertTrue("Index of month element is not 1", prefIndex == 1);
+
     }
 
 

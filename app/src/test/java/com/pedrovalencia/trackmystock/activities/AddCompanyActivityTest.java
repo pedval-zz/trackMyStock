@@ -101,19 +101,22 @@ public class AddCompanyActivityTest {
 
         //Try to get the list
         textView.setText("Goo");
-        //ListView
-        assertTrue("Company list size does not match: (5): "+textView.getAdapter().getCount()
-                , textView.getAdapter().getCount() == 5);
+        assertTrue("Company list size does not match: (10): "+textView.getAdapter().getCount()
+                , textView.getAdapter().getCount() == 10);
 
         //Test element in list
-        assertTrue("Element in position 3 is not Nextub: "+((TextView)textView.getAdapter().getView(3, null, null)).getText().toString(),
-                ((TextView)textView.getAdapter().getView(3, null, null)).getText().toString().equals("Nextub"));
+        assertTrue("Element in position 3 is not \"Goodrich Petroleum Corp\" (code GDP): "+((TextView)textView.getAdapter().getView(3, null, null)).getText().toString(),
+                ((TextView)textView.getAdapter().getView(3, null, null)).getText().toString().equals("Goodrich Petroleum Corp.(GDP)"));
 
-        assertTrue("Element in position 3 is not Nextub: "+ textView.getAdapter().getItem(3),
-                textView.getAdapter().getItem(3).equals("Nextub"));
+        assertTrue("Element in position 1 is not Google (code GOOGL): "+ textView.getAdapter().getItem(1),
+                textView.getAdapter().getItem(1).equals("Google Inc.(GOOGL)"));
 
 
-        //TODO test when no results.
+        //No result
+        textView.setText("Eyb");
+        assertTrue("Company list size does not match: (0): "+textView.getAdapter().getCount()
+                , textView.getAdapter().getCount() == 0);
+
 
         //Button
         Button button = (Button)activity.findViewById(R.id.add_company_button);
