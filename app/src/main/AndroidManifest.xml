@@ -44,6 +44,14 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
+
+        <!--Register provider -->
+        <provider
+            android:authorities="com.pedrovalencia.trackmystock.app"
+            android:name=".data.CompanyProvider"
+            android:enabled="true"
+            android:exported="false"
+            android:syncable="true"></provider>
     </application>
 
 </manifest>

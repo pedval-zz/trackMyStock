@@ -29,6 +29,19 @@ public class CompanyProvider extends ContentProvider {
         sCompanyQueryBuilder.setTables(CompanyContract.CompanyEntry.TABLE_NAME);
     }
 
+    //Obtain all companies in the table
+    private Cursor getCompany(Uri uri) {
+        return sCompanyQueryBuilder.query(mOpenHelper.getReadableDatabase(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+    }
+
+    //Obtain the company filtered by the symbol
     private Cursor getCompanyBySymbol(Uri uri, String[] projection) {
 
         String symbol = CompanyContract.CompanyEntry.getSymbolFromUri(uri);
@@ -53,6 +66,11 @@ public class CompanyProvider extends ContentProvider {
         Cursor retCursor;
 
         switch (sUriMatcher.match(uri)) {
+            case COMPANY:
+            {
+                retCursor = getCompany(uri);
+                break;
+            }
             //"company/*"
             case COMPANY_WITH_SYMBOL:
             {
@@ -154,7 +172,8 @@ public class CompanyProvider extends ContentProvider {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String auth = CompanyContract.CONTENT_AUTHORITY;
 
-        matcher.addURI(auth,CompanyContract.PATH_COMPANY + "/#",COMPANY);
+        matcher.addURI(auth,CompanyContract.PATH_COMPANY,COMPANY);
+        matcher.addURI(auth,CompanyContract.PATH_COMPANY + "/#",COMPANY_WITH_SYMBOL);
 
         return matcher;
 
