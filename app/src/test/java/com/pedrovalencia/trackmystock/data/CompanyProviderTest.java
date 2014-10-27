@@ -3,6 +3,7 @@ package com.pedrovalencia.trackmystock.data;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +25,11 @@ public class CompanyProviderTest {
     public void setUp() throws Exception{
         mCompanyProvider = new CompanyProvider();
         mCompanyProvider.onCreate();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        mCompanyProvider.delete(CompanyContract.CompanyEntry.CONTENT_URI, null, null);
     }
 
     @Test

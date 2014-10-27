@@ -66,6 +66,7 @@ public class CompanyProvider extends ContentProvider {
         Cursor retCursor;
 
         switch (sUriMatcher.match(uri)) {
+            //"company"
             case COMPANY:
             {
                 retCursor = getCompany(uri);
