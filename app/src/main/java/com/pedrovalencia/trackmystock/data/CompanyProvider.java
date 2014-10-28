@@ -113,7 +113,7 @@ public class CompanyProvider extends ContentProvider {
             {
                 long _id = db.insert(CompanyContract.CompanyEntry.TABLE_NAME, null, contentValues);
                 if(_id > 0) {
-                    returnUri = CompanyContract.CompanyEntry.buildCompanyUri(_id);
+                    returnUri = CompanyContract.CompanyEntry.buildCompanyUri(contentValues.getAsString(CompanyContract.CompanyEntry.COLUMN_SYMBOL));
                 } else {
                     throw new SQLException("Failed to insert row into " + uri);
                 }
@@ -137,6 +137,13 @@ public class CompanyProvider extends ContentProvider {
                 rowsDeleted = db.delete(CompanyContract.CompanyEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
+            case COMPANY_WITH_SYMBOL: {
+                String symbol = CompanyContract.CompanyEntry.getSymbolFromUri(uri);
+                rowsDeleted = db.delete(CompanyContract.CompanyEntry.TABLE_NAME,
+                        CompanyContract.CompanyEntry.COLUMN_SYMBOL + " = ?",
+                        new String[]{symbol});
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri: "+uri);
         }
@@ -153,8 +160,12 @@ public class CompanyProvider extends ContentProvider {
         int rowsUpdated;
 
         switch (match) {
-            case COMPANY: {
-                rowsUpdated = db.update(CompanyContract.CompanyEntry.TABLE_NAME, contentValues, selection, selectionArgs);
+            case COMPANY_WITH_SYMBOL: {
+                String symbol = CompanyContract.CompanyEntry.getSymbolFromUri(uri);
+                rowsUpdated = db.update(CompanyContract.CompanyEntry.TABLE_NAME,
+                        contentValues,
+                        CompanyContract.CompanyEntry.COLUMN_SYMBOL + " = ?",
+                        new String[]{symbol});
                 break;
             }
 
@@ -174,7 +185,7 @@ public class CompanyProvider extends ContentProvider {
         final String auth = CompanyContract.CONTENT_AUTHORITY;
 
         matcher.addURI(auth,CompanyContract.PATH_COMPANY,COMPANY);
-        matcher.addURI(auth,CompanyContract.PATH_COMPANY + "/#",COMPANY_WITH_SYMBOL);
+        matcher.addURI(auth,CompanyContract.PATH_COMPANY + "/*",COMPANY_WITH_SYMBOL);
 
         return matcher;
 

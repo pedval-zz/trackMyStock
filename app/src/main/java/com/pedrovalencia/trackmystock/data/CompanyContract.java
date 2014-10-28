@@ -1,6 +1,5 @@
 package com.pedrovalencia.trackmystock.data;
 
-import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -40,8 +39,8 @@ public class CompanyContract {
         public static final String COLUMN_LOW = "low";
         public static final String COLUMN_PERCENTAGE = "percentage";
 
-        public static Uri buildCompanyUri(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
+        public static Uri buildCompanyUri(String symbol) {
+            return CONTENT_URI.buildUpon().appendPath(symbol).build();
         }
 
         public static String getSymbolFromUri(Uri uri) {
