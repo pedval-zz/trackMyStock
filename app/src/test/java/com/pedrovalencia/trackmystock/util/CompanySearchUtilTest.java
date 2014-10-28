@@ -16,7 +16,6 @@ public class CompanySearchUtilTest {
 
     @Test
     public void testSearchGoodResult() throws Exception{
-
         ArrayList<CompanySignature> companyList = new ArrayList<CompanySignature>();
         assertNotNull("The company list is null", companyList);
         assertTrue("Company list size does not match (0): "+ companyList.size(),

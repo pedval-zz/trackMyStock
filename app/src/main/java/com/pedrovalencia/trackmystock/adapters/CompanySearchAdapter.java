@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class CompanySearchAdapter extends ArrayAdapter<String> implements Filterable{
 
-    private Filter mFilter;
+    public Filter mFilter;
     private Context mContext;
     private int layoutResourceId;
     private ArrayList<CompanySignature> mResultList;
@@ -42,8 +42,7 @@ public class CompanySearchAdapter extends ArrayAdapter<String> implements Filter
             protected FilterResults performFiltering(CharSequence query) {
                 FilterResults filterResults = new FilterResults();
                 if (query != null) {
-                    // Retrieve the autocomplete results.
-                    //TODO bring information dynamically
+                    // Retrieve the auto complete results.
                     mResultList = CompanySearchUtil.getCompany(query.toString());
 
                     // Assign the data to the FilterResults

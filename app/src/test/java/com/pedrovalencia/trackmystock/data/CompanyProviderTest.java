@@ -264,6 +264,52 @@ public class CompanyProviderTest {
         cursor.close();
     }
 
+    @Test
+    public void updateElementWithWrongUri() throws Exception {
+        //Insert a row with symbol GOOGL
+        ContentValues contentValues = getContentValues("GOOGL");
+        mCompanyProvider.insert(CompanyContract.CompanyEntry.CONTENT_URI,
+                contentValues);
+
+        //update the row changing a value
+        ContentValues newValues = new ContentValues();
+        newValues.put(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE, "10282014");
+        //We're ready for the exception thrown
+        exception.expect(UnsupportedOperationException.class);
+        mCompanyProvider.update(getWrongUri(),
+                newValues,
+                null,
+                null);
+
+        Cursor cursor = mCompanyProvider.query(CompanyContract.CompanyEntry.buildCompanyUri("GOOGL"),
+                null,
+                null,
+                null,
+                null);
+
+        assertNull("Cursor is not null", cursor);
+        cursor.close();
+
+    }
+
+    @Test
+    public void testGetType() throws Exception {
+        String type = mCompanyProvider.getType(CompanyContract.CompanyEntry.CONTENT_URI);
+        assertTrue("Content type does not match", type.equals("vnd.android.cursor.dir/com.pedrovalencia.trackmystock.app/company"));
+
+        type = mCompanyProvider.getType(CompanyContract.CompanyEntry.buildCompanyUri("GOOGL"));
+        assertTrue("Content type does not match",type.equals("vnd.android.cursor.item/com.pedrovalencia.trackmystock.app/company"));
+    }
+
+    @Test
+    public void testGetTypeWrongUri() throws Exception {
+        //We're ready for the exception thrown
+        exception.expect(UnsupportedOperationException.class);
+
+        String type = mCompanyProvider.getType(getWrongUri());
+        assertNull("Content type is not null", type);
+    }
+
 
 
     private ContentValues getContentValues(String symbol) {
