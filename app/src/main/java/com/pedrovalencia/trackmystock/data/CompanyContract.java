@@ -37,7 +37,7 @@ public class CompanyContract {
         public static final String COLUMN_LAST_UPDATE = "last_update";
         public static final String COLUMN_HIGH = "high";
         public static final String COLUMN_LOW = "low";
-        public static final String COLUMN_PERCENTAGE = "percentage";
+        public static final String COLUMN_CHANGE = "change";
 
         public static Uri buildCompanyUri(String symbol) {
             return CONTENT_URI.buildUpon().appendPath(symbol).build();

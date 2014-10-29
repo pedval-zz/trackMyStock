@@ -29,7 +29,7 @@ public class CompanyDbHelper extends SQLiteOpenHelper {
                 CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE + " TEXT NOT NULL, " +
                 CompanyContract.CompanyEntry.COLUMN_HIGH + " REAL NOT NULL, " +
                 CompanyContract.CompanyEntry.COLUMN_LOW + " REAL NOT NULL, " +
-                CompanyContract.CompanyEntry.COLUMN_PERCENTAGE + " REAL);";
+                CompanyContract.CompanyEntry.COLUMN_CHANGE + " TEXT);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_COMPANY_TABLE);
 

@@ -1,5 +1,6 @@
 package com.pedrovalencia.trackmystock.activities;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,8 +12,14 @@ import android.widget.AutoCompleteTextView;
 
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.adapters.CompanySearchAdapter;
+import com.pedrovalencia.trackmystock.data.CompanyContract;
+import com.pedrovalencia.trackmystock.domain.CompanyDetail;
+import com.pedrovalencia.trackmystock.domain.CompanySignature;
+import com.pedrovalencia.trackmystock.util.CompanySearchUtil;
 
 public class AddCompanyActivity extends ActionBarActivity {
+
+    private CompanySignature mCompanySignature;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,25 @@ public class AddCompanyActivity extends ActionBarActivity {
      * @param view
      */
     public void goToCompanyListActivity(View view) {
+        //1.- Get all data from view
+        AutoCompleteTextView textView = (AutoCompleteTextView)findViewById(R.id.add_company_list_view);
+        CompanySignature companySignature = ((CompanySignature)textView.getAdapter().getItem(textView.getListSelection()));
+
+        //2.- Bring info for this company
+        CompanyDetail companyDetail = CompanySearchUtil.getDetail(companySignature.getSymbol());
+
+        //3.- Store that company info
+        ContentValues values = new ContentValues();
+        values.put(CompanyContract.CompanyEntry.COLUMN_SYMBOL, companyDetail.getCompanySignature().getSymbol());
+        values.put(CompanyContract.CompanyEntry.COLUMN_NAME, companyDetail.getCompanySignature().getName());
+        values.put(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE, companyDetail.getDate());
+        values.put(CompanyContract.CompanyEntry.COLUMN_PRICE, companyDetail.getPrice());
+        values.put(CompanyContract.CompanyEntry.COLUMN_HIGH, companyDetail.getHigh());
+        values.put(CompanyContract.CompanyEntry.COLUMN_LOW, companyDetail.getLow());
+        values.put(CompanyContract.CompanyEntry.COLUMN_CHANGE, companyDetail.getChange());
+        getContentResolver().insert(CompanyContract.CompanyEntry.CONTENT_URI, values);
+
+        //4.- Go to CompanyListActivity
         Intent intent = new Intent(this, CompanyListActivity.class);
         startActivity(intent);
     }

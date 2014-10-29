@@ -311,7 +311,7 @@ public class CompanyProviderTest {
     }
 
 
-
+    //Populates the content values
     private ContentValues getContentValues(String symbol) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(CompanyContract.CompanyEntry.COLUMN_SYMBOL, symbol);
@@ -320,17 +320,15 @@ public class CompanyProviderTest {
         contentValues.put(CompanyContract.CompanyEntry.COLUMN_PRICE, 30.20);
         contentValues.put(CompanyContract.CompanyEntry.COLUMN_HIGH, 32.15);
         contentValues.put(CompanyContract.CompanyEntry.COLUMN_LOW, 30.12);
-        contentValues.put(CompanyContract.CompanyEntry.COLUMN_PERCENTAGE, 2.32);
+        contentValues.put(CompanyContract.CompanyEntry.COLUMN_CHANGE, "+2.32");
 
         return contentValues;
     }
 
+    //Creates a wrong uri using "conpany" as PATH
     private Uri getWrongUri() {
         return Uri.parse("content://com.pedrovalencia.trackmystock.app").buildUpon().
                 appendPath("conpany").build();
     }
-
-
-
 
 }

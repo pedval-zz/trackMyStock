@@ -171,12 +171,34 @@ public class AddCompanyActivityTest {
 
     }
 
+    @Test
+    public void testButtonIsDisabledWhenNoResults() throws Exception {
+        Activity activity = (Activity)activityController.get();
 
+        //EditText
+        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
+        //Button
+        Button button = (Button)activity.findViewById(R.id.add_company_button);
+
+        //Test the button disabled when results
+        textView.setText("Eyb");
+        assertTrue("Button is not disabled", !button.isEnabled());
+    }
+
+/*
     @Test
     public void testAcceptButtonBehaviour() throws Exception {
         Activity activity = (Activity)activityController.get();
 
+        //EditText
+        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
+        //Button
         Button button = (Button)activity.findViewById(R.id.add_company_button);
+
+        //Test the button enabled when results
+        textView.setText("Goo");
+        textView.getOnItemClickListener().onItemClick(null, null, 0, 0);
+        assertTrue("Button is not enabled", button.isEnabled());
         button.performClick();
 
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
@@ -184,7 +206,7 @@ public class AddCompanyActivityTest {
                 intent.getComponent().getClassName().equals(CompanyListActivity.class.getCanonicalName()));
 
         //TODO test when no results.
-    }
+    }*/
 
     //TODO navigation to previous activity
 }
