@@ -47,5 +47,9 @@ public class CompanyContract {
             return uri.getPathSegments().get(1);
         }
 
+        public static Uri getCompany() {
+            return CONTENT_URI.buildUpon().build();
+        }
+
     }
 }

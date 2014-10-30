@@ -1,8 +1,13 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +19,7 @@ import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.adapters.CompanyListAdapter;
+import com.pedrovalencia.trackmystock.data.CompanyContract;
 
 
 public class CompanyListActivity extends ActionBarActivity {
@@ -50,13 +56,24 @@ public class CompanyListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
         private CompanyListAdapter companyListAdapter;
         private ListView mListView;
+
+        private static final String[] COMPANY_COLUMNS = new String[] {
+                CompanyContract.CompanyEntry.COLUMN_SYMBOL,
+                CompanyContract.CompanyEntry.COLUMN_NAME,
+                CompanyContract.CompanyEntry.COLUMN_PRICE,
+                CompanyContract.CompanyEntry.COLUMN_CHANGE,
+                CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE,
+                CompanyContract.CompanyEntry.COLUMN_HIGH,
+                CompanyContract.CompanyEntry.COLUMN_LOW
+        };
 
         public PlaceholderFragment() {
         }
@@ -81,6 +98,28 @@ public class CompanyListActivity extends ActionBarActivity {
             });
 
             return rootView;
+        }
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+            return new CursorLoader(
+                    getActivity(),
+                    CompanyContract.CompanyEntry.getCompany(),
+                    COMPANY_COLUMNS,
+                    null,
+                    null,
+                    null
+            );
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+            companyListAdapter.swapCursor(cursor);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> cursorLoader) {
+            companyListAdapter.swapCursor(null);
         }
 
     }
