@@ -3,9 +3,11 @@ package com.pedrovalencia.trackmystock.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuInflater;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
 
@@ -120,12 +122,6 @@ public class AddCompanyActivityTest {
         assertTrue("Company list size does not match: (10): "+textView.getAdapter().getCount()
                 , textView.getAdapter().getCount() == 10);
 
-        //Test element in list
-        assertTrue("Element in position 3 is not \"Goodrich Petroleum Corp\" (code GDP): "+((TextView)textView.getAdapter().getView(3, null, null)).getText().toString(),
-                ((TextView)textView.getAdapter().getView(3, null, null)).getText().toString().equals("Goodrich Petroleum Corp.(GDP)"));
-
-        assertTrue("Element in position 1 is not Google (code GOOGL): "+ textView.getAdapter().getItem(1),
-                textView.getAdapter().getItem(1).equals("Google Inc.(GOOGL)"));
     }
 
     @Test
@@ -160,13 +156,34 @@ public class AddCompanyActivityTest {
         Activity activity = (Activity)activityController.get();
 
         //EditText
-        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
+        final AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
         //Button
         Button button = (Button)activity.findViewById(R.id.add_company_button);
 
         //Test the button enabled when results
         textView.setText("Goo");
-        textView.getOnItemClickListener().onItemClick(null, null, 0, 0);
+        AdapterView adapterView = new AdapterView(activity) {
+            @Override
+            public Adapter getAdapter() {
+                return textView.getAdapter();
+            }
+
+            @Override
+            public void setAdapter(Adapter adapter) {
+
+            }
+
+            @Override
+            public View getSelectedView() {
+                return null;
+            }
+
+            @Override
+            public void setSelection(int i) {
+
+            }
+        };
+        textView.getOnItemClickListener().onItemClick(adapterView, null, 0, 0);
         assertTrue("Button is not enabled", button.isEnabled());
 
     }

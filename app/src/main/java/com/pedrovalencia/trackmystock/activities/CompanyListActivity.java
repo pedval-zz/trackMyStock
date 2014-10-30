@@ -80,10 +80,6 @@ public class CompanyListActivity extends ActionBarActivity {
                 }
             });
 
-            //TODO REMOVE WHEN WE HAVE DYNAMIC DATA
-            Intent intent = new Intent(getActivity(), DetailActivity.class);
-            startActivity(intent);
-
             return rootView;
         }
 

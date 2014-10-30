@@ -25,10 +25,8 @@ public class CompanySearchUtil {
     private static final String REQUEST_POSTFIX = "&callback=YAHOO.Finance.SymbolSuggest.ssCallback";
 
     //Request prefix and postfix for detail query
-    private static final String DETAIL_REQUEST_PREFIX =
-            "https://query.yahooapis.com/v1/public/yql?q=select * from csv where url='http://download.finance.yahoo.com/d/quotes.csv?s=";
-    private static final String DETAIL_REQUEST_POSTFIX =
-            "&f=nl1d1t1c1hg&e=.csv' and columns='name,price,date,time,change,high,low'&format=json&env=store://datatables.org/alltableswithkeys";
+    private static final String DETAIL_REQUEST_PREFIX ="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes.csv%3Fs%3D";
+    private static final String DETAIL_REQUEST_POSTFIX = "%26f%3Dnl1d1t1c1hg%26e%3D.csv'%20and%20columns%3D'name%2Cprice%2Cdate%2Ctime%2Cchange%2Chigh%2Clow'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
 
 
     private static final String LOG_TAG = CompanySearchUtil.class.getSimpleName();
@@ -51,6 +49,7 @@ public class CompanySearchUtil {
         request.append(REQUEST_PREFIX).append(query).append(REQUEST_POSTFIX);
 
         try{
+
             //Create the url from the request string
             URL url = new URL(request.toString());
 
@@ -114,6 +113,7 @@ public class CompanySearchUtil {
         request.append(DETAIL_REQUEST_PREFIX).append(symbol).append(DETAIL_REQUEST_POSTFIX);
 
         try{
+
             //Create the url from the request string
             URL url = new URL(request.toString());
 
@@ -128,7 +128,7 @@ public class CompanySearchUtil {
             while ((read = inReader.read(buff)) != -1) {
                 jsonResults.append(buff, 0, read);
             }
-        } catch (IOException ex) {
+        }  catch (IOException ex) {
             Log.e(LOG_TAG, "Error trying to connect to external API", ex);
             return null;
 
@@ -140,21 +140,23 @@ public class CompanySearchUtil {
 
         try {
             // Create a JSON object hierarchy from the results
-            JSONObject jsonObj = new JSONObject(removeNoJSONPart(jsonResults.toString()));
-            JSONArray resultJsonArray = jsonObj.getJSONObject("query").getJSONObject("results").getJSONArray("row");
+            JSONObject jsonObj = new JSONObject(jsonResults.toString()).getJSONObject("query").
+                    getJSONObject("results").getJSONObject("row");
+
+            String jsonString = jsonObj.toString();
 
             // Extract the Place descriptions from the results
-            if(resultJsonArray.length() > 0) {
+            if(jsonObj.length() > 0) {
                 companyDetail = new CompanyDetail(
                         new CompanySignature(
-                                resultJsonArray.getJSONObject(0).getString("name"),
-                                resultJsonArray.getJSONObject(0).getString("symbol")
+                                jsonObj.getString("name"),
+                                symbol
                         ),
-                        Double.parseDouble(resultJsonArray.getJSONObject(0).getString("price")),
-                        resultJsonArray.getJSONObject(0).getString("date") + resultJsonArray.getJSONObject(0).getString("time"),
-                        Double.parseDouble(resultJsonArray.getJSONObject(0).getString("high")),
-                        Double.parseDouble(resultJsonArray.getJSONObject(0).getString("low")),
-                        resultJsonArray.getJSONObject(0).getString("change")
+                        Double.parseDouble(jsonObj.getString("price")),
+                        jsonObj.getString("date") + jsonObj.getString("time"),
+                        Double.parseDouble(jsonObj.getString("high")),
+                        Double.parseDouble(jsonObj.getString("low")),
+                        jsonObj.getString("change")
                 );
             }
 

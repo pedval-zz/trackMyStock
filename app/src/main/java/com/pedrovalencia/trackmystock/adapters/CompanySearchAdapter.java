@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Created by pedrovalencia on 20/10/14.
  */
-public class CompanySearchAdapter extends ArrayAdapter<String> implements Filterable{
+public class CompanySearchAdapter extends ArrayAdapter<CompanySignature> implements Filterable{
 
     public Filter mFilter;
     private Context mContext;
@@ -96,9 +96,8 @@ public class CompanySearchAdapter extends ArrayAdapter<String> implements Filter
     }
 
     @Override
-    public String getItem(int index){
-        CompanySignature companySignature = mResultList.get(index);
-        return companySignature.getName() + "(" + companySignature.getSymbol() + ")";
+    public CompanySignature getItem(int index){
+        return mResultList.get(index);
     }
 
 }
