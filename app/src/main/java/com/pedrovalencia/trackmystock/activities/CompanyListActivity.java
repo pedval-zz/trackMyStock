@@ -2,8 +2,8 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,17 +66,30 @@ public class CompanyListActivity extends ActionBarActivity {
         private CompanyListAdapter companyListAdapter;
         private ListView mListView;
 
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setHasOptionsMenu(true);
+        }
+
         private static final String[] COMPANY_COLUMNS = new String[] {
-                CompanyContract.CompanyEntry.COLUMN_SYMBOL,
                 CompanyContract.CompanyEntry.COLUMN_NAME,
-                CompanyContract.CompanyEntry.COLUMN_PRICE,
-                CompanyContract.CompanyEntry.COLUMN_CHANGE,
-                CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE,
-                CompanyContract.CompanyEntry.COLUMN_HIGH,
-                CompanyContract.CompanyEntry.COLUMN_LOW
+                CompanyContract.CompanyEntry.COLUMN_CHANGE
         };
 
+        @Override
+        public void onResume() {
+            super.onResume();
+            getLoaderManager().restartLoader(0, null, this);
+        }
+
         public PlaceholderFragment() {
+        }
+
+        @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            getLoaderManager().initLoader(0, null, this);
         }
 
         @Override
@@ -99,6 +113,31 @@ public class CompanyListActivity extends ActionBarActivity {
 
             return rootView;
         }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            inflater.inflate(R.menu.company_list, menu);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
+            if (id == R.id.action_settings) {
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+            }
+            if(id == R.id.action_add_company) {
+                Intent intent = new Intent(getActivity(), AddCompanyActivity.class);
+                startActivity(intent);
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+
 
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {

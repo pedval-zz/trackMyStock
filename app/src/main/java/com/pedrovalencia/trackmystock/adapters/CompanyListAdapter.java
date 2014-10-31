@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
+import com.pedrovalencia.trackmystock.data.CompanyContract;
 
 /**
  * Created by pedrovalencia on 22/10/14.
@@ -29,17 +30,23 @@ public class CompanyListAdapter extends CursorAdapter{
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        //TODO Retreive the info from the Cursor
+        //Retrieve elements from cursor
+        String name = cursor.getString(CompanyContract.CompanyEntry.COLUMN_NAME_POS);
+        String change = cursor.getString(CompanyContract.CompanyEntry.COLUMN_CHANGE_POS);
 
         //Name company field
         TextView nameCompany = (TextView)view.findViewById(R.id.single_company_name);
-        nameCompany.setText("Nextub");
+        nameCompany.setText(name);
 
-        //Percentage field
-        //TODO format the TextView depends on the percentage value
+        //Change field
         TextView percentage = (TextView)view.findViewById(R.id.single_company_percentage);
-        percentage.setTextColor(context.getResources().getColor(R.color.green));
-        percentage.setText("+34.5 %");
+        char sign = change.charAt(0);
+        if(sign == '+') {
+            percentage.setTextColor(context.getResources().getColor(R.color.green));
+        } else if(sign == '-') {
+            percentage.setTextColor(context.getResources().getColor(R.color.red));
+        }
+        percentage.setText(change);
 
     }
 }

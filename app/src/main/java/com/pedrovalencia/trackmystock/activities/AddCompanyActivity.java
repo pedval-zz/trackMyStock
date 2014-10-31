@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +19,15 @@ import com.pedrovalencia.trackmystock.domain.CompanyDetail;
 import com.pedrovalencia.trackmystock.domain.CompanySignature;
 import com.pedrovalencia.trackmystock.util.CompanySearchUtil;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 public class AddCompanyActivity extends ActionBarActivity {
 
+    private final String LOG_TAG = AddCompanyActivity.class.getSimpleName();
     private CompanySignature mCompanySignature;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +76,22 @@ public class AddCompanyActivity extends ActionBarActivity {
     public void goToCompanyListActivity(View view) {
 
         //Call asynctask to retreive detail and store in database
-        new RetrieveCompanyDetail().execute(new String[]{mCompanySignature.getSymbol()});
+        AsyncTask asyncTask = new RetrieveCompanyDetail().execute(new String[]{mCompanySignature.getSymbol()});
+        //Wait for the task up to 2 seconds
+        try {
+            asyncTask.get(2000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            Log.e(LOG_TAG, "Error while saving");
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            Log.e(LOG_TAG, "Error while saving");
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            Log.e(LOG_TAG, "Error while saving");
+            e.printStackTrace();
+        }
 
-        //4.- Go to CompanyListActivity
+        //Go to CompanyListActivity
         Intent intent = new Intent(this, CompanyListActivity.class);
         startActivity(intent);
     }
@@ -80,6 +100,13 @@ public class AddCompanyActivity extends ActionBarActivity {
      * Async task that retrieve company detail and store in DB
      */
     private class RetrieveCompanyDetail extends AsyncTask<String, Void, Void> {
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+        }
 
         @Override
         protected Void doInBackground(String... params) {

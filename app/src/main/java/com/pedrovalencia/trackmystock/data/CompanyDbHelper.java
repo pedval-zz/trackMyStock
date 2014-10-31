@@ -23,7 +23,8 @@ public class CompanyDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         final String SQL_CREATE_COMPANY_TABLE = "CREATE TABLE " + CompanyContract.CompanyEntry.TABLE_NAME + " (" +
-                CompanyContract.CompanyEntry.COLUMN_SYMBOL + " TEXT PRIMARY KEY, " +
+                CompanyContract.CompanyEntry.COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                CompanyContract.CompanyEntry.COLUMN_SYMBOL + " TEXT UNIQUE, " +
                 CompanyContract.CompanyEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 CompanyContract.CompanyEntry.COLUMN_PRICE + " REAL NOT NULL, " +
                 CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE + " TEXT NOT NULL, " +
