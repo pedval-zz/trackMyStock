@@ -202,19 +202,40 @@ public class AddCompanyActivityTest {
         assertTrue("Button is not disabled", !button.isEnabled());
     }
 
-/*
+
     @Test
     public void testAcceptButtonBehaviour() throws Exception {
         Activity activity = (Activity)activityController.get();
 
         //EditText
-        AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
+        final AutoCompleteTextView textView = (AutoCompleteTextView)activity.findViewById(R.id.add_company_list_view);
         //Button
         Button button = (Button)activity.findViewById(R.id.add_company_button);
 
         //Test the button enabled when results
         textView.setText("Goo");
-        textView.getOnItemClickListener().onItemClick(null, null, 0, 0);
+        AdapterView adapterView = new AdapterView(activity) {
+            @Override
+            public Adapter getAdapter() {
+                return textView.getAdapter();
+            }
+
+            @Override
+            public void setAdapter(Adapter adapter) {
+
+            }
+
+            @Override
+            public View getSelectedView() {
+                return null;
+            }
+
+            @Override
+            public void setSelection(int i) {
+
+            }
+        };
+        textView.getOnItemClickListener().onItemClick(adapterView, null, 0, 0);
         assertTrue("Button is not enabled", button.isEnabled());
         button.performClick();
 
@@ -223,7 +244,7 @@ public class AddCompanyActivityTest {
                 intent.getComponent().getClassName().equals(CompanyListActivity.class.getCanonicalName()));
 
         //TODO test when no results.
-    }*/
+    }
 
     //TODO navigation to previous activity
 }

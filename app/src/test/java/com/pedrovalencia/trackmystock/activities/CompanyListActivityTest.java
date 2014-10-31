@@ -60,12 +60,13 @@ public class CompanyListActivityTest {
     }
 
     @Test
-    public void testOnOptionsItemSelected() throws Exception {
+    public void testGoToSettings() throws Exception {
 
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
+        new MenuInflater(Robolectric.application).inflate(R.menu.company_list, testMenu);
 
+        //Select item 0 (Settings)
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
         activity.onOptionsItemSelected(menuItem);
@@ -73,9 +74,29 @@ public class CompanyListActivityTest {
         //Test we move to SettingsActivity.
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
-        //TODO uncomment when removing redirection from CompanyListActivity to DetailActivity
-        /*assertTrue("Type of activity is not SettingsActivity class: " + shadowIntent.getComponent().getClassName(),
-                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));*/
+
+        assertTrue("Type of activity is not SettingsActivity class: " + shadowIntent.getComponent().getClassName(),
+                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));
+    }
+
+    @Test
+    public void testGoToAddCompany() throws Exception {
+
+        //Simulate a Menu object
+        TestMenu testMenu = new TestMenu(Robolectric.application);
+        new MenuInflater(Robolectric.application).inflate(R.menu.company_list, testMenu);
+
+        //Select item 1 (Add company)
+        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(1);
+
+        activity.onOptionsItemSelected(menuItem);
+
+        //Test we move to SettingsActivity.
+        Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
+
+        assertTrue("Type of activity is not AddCompanyActivity class: " + shadowIntent.getComponent().getClassName(),
+                shadowIntent.getComponent().getClassName().equals(AddCompanyActivity.class.getCanonicalName()));
     }
 
     @Test
