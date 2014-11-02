@@ -128,4 +128,8 @@ public class AddCompanyActivity extends ActionBarActivity {
         }
 
     }
+
+    public void setCompanySignature (CompanySignature companySignature) {
+        this.mCompanySignature = companySignature;
+    }
 }

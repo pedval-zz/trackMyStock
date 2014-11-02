@@ -13,7 +13,9 @@ import com.pedrovalencia.trackmystock.R;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -33,6 +35,8 @@ import static org.junit.Assert.assertTrue;
 public class AddCompanyActivityTest {
 
     private ActivityController activityController;
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {

@@ -2,13 +2,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.pedrovalencia.trackmystock.activities.CompanyListActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
 
     <item android:id="@+id/action_add_company"
         android:title="@string/action_add_company"
+        android:icon="@drawable/ic_action_new"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_listActions"
+        android:icon="@drawable/ic_action_overflow"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_settings">
+
+        <menu>
+            <item android:id="@+id/action_settings"
+                android:title="@string/action_settings"
+                android:orderInCategory="100"
+                app:showAsAction="ifRoom" />
+
+        </menu>
+    </item>
 </menu>

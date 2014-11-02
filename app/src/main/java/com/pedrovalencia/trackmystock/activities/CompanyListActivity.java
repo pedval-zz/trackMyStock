@@ -11,7 +11,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +53,10 @@ public class CompanyListActivity extends ActionBarActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
+        if(id == R.id.action_add_company) {
+            Intent intent = new Intent(this, AddCompanyActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -69,7 +72,6 @@ public class CompanyListActivity extends ActionBarActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            setHasOptionsMenu(true);
         }
 
         private static final String[] COMPANY_COLUMNS = new String[] {
@@ -102,7 +104,7 @@ public class CompanyListActivity extends ActionBarActivity {
             mListView = (ListView) rootView.findViewById(R.id.company_list_fragment_list_view);
             mListView.setAdapter(companyListAdapter);
 
-            //Attach onItemClickListener. This will be triggered everytime the customer clicks on
+            //Attach onItemClickListener. This will be triggered each time the customer clicks on
             //one row
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -113,31 +115,6 @@ public class CompanyListActivity extends ActionBarActivity {
 
             return rootView;
         }
-
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            inflater.inflate(R.menu.company_list, menu);
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-            if (id == R.id.action_settings) {
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intent);
-            }
-            if(id == R.id.action_add_company) {
-                Intent intent = new Intent(getActivity(), AddCompanyActivity.class);
-                startActivity(intent);
-            }
-            return super.onOptionsItemSelected(item);
-        }
-
-
 
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
