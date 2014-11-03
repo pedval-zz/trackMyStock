@@ -56,7 +56,7 @@ public class DetailActivityTest {
 
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.detail, testMenu);
+        new MenuInflater(Robolectric.application).inflate(R.menu.detail_fragment, testMenu);
 
         activity.onCreateOptionsMenu(testMenu);
 
@@ -65,10 +65,6 @@ public class DetailActivityTest {
         assertTrue("First menu is not Settings: " + menuItem.getItemId(),
                 menuItem.getItemId() == R.id.action_discard_company);
 
-        //Test the first item is Settings
-        menuItem = (TestMenuItem)testMenu.getItem(1);
-        assertTrue("First menu is not Settings: " + menuItem.getItemId(),
-                menuItem.getItemId() == R.id.action_listActions);
 
     }
 
@@ -79,8 +75,8 @@ public class DetailActivityTest {
         TestMenu testMenu = new TestMenu(Robolectric.application);
         new MenuInflater(Robolectric.application).inflate(R.menu.detail, testMenu);
 
-        //Select item 1 (Settings)
-        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(1);
+        //Select item 0 (Settings)
+        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
         SubMenu subMenu = menuItem.getSubMenu();
         TestMenuItem subMenuItem = (TestMenuItem)subMenu.getItem(0);
