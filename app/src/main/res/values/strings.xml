@@ -9,6 +9,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_add_company">Add Company</string>
+    <string name="action_discard_company">Delete Company</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!-- EmptyListActivity wording -->
@@ -38,5 +39,11 @@
     <string name="pref_historic_week">Week</string>
     <string name="pref_historic_month">Month</string>
     <string name="pref_historic_default">week</string>
+
+    <!-- Alert dialog elements -->
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_message">Are you sure you want to delete the company?</string>
+    <string name="dialog_title">Confirm deletion</string>
 
 </resources>

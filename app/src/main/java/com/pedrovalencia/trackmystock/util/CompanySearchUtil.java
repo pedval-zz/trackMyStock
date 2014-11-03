@@ -143,19 +143,25 @@ public class CompanySearchUtil {
             JSONObject jsonObj = new JSONObject(jsonResults.toString()).getJSONObject("query").
                     getJSONObject("results").getJSONObject("row");
 
-            String jsonString = jsonObj.toString();
-
             // Extract the Place descriptions from the results
             if(jsonObj.length() > 0) {
+                //For us, the date object is just another field. We're not going to use it for
+                //any purpose but for show in detail.
+
+                //TODO change the value of these three attributes to String
+                double price = jsonObj.getString("price").equals("N/A")? 0.0 : Double.parseDouble(jsonObj.getString("price"));
+                double high = jsonObj.getString("high").equals("N/A") ? 0.0: Double.parseDouble(jsonObj.getString("high"));
+                double low = jsonObj.getString("low").equals("N/A") ? 0.0 : Double.parseDouble(jsonObj.getString("low"));
+
                 companyDetail = new CompanyDetail(
                         new CompanySignature(
                                 jsonObj.getString("name"),
                                 symbol
                         ),
-                        Double.parseDouble(jsonObj.getString("price")),
-                        jsonObj.getString("date") + jsonObj.getString("time"),
-                        Double.parseDouble(jsonObj.getString("high")),
-                        Double.parseDouble(jsonObj.getString("low")),
+                        price,
+                        jsonObj.getString("date") +" - "+jsonObj.getString("time"),
+                        high,
+                        low,
                         jsonObj.getString("change")
                 );
             }

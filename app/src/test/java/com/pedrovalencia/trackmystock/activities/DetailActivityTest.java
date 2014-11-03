@@ -3,6 +3,7 @@ package com.pedrovalencia.trackmystock.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -62,7 +63,12 @@ public class DetailActivityTest {
         //Test the first item is Settings
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
         assertTrue("First menu is not Settings: " + menuItem.getItemId(),
-                menuItem.getItemId() == R.id.action_settings);
+                menuItem.getItemId() == R.id.action_discard_company);
+
+        //Test the first item is Settings
+        menuItem = (TestMenuItem)testMenu.getItem(1);
+        assertTrue("First menu is not Settings: " + menuItem.getItemId(),
+                menuItem.getItemId() == R.id.action_listActions);
 
     }
 
@@ -71,11 +77,15 @@ public class DetailActivityTest {
         Activity activity = (Activity)activityController.start().resume().get();
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
+        new MenuInflater(Robolectric.application).inflate(R.menu.detail, testMenu);
 
-        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
+        //Select item 1 (Settings)
+        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(1);
 
-        activity.onOptionsItemSelected(menuItem);
+        SubMenu subMenu = menuItem.getSubMenu();
+        TestMenuItem subMenuItem = (TestMenuItem)subMenu.getItem(0);
+
+        activity.onOptionsItemSelected(subMenuItem);
 
         //Test we move to SettingsActivity.
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
@@ -83,6 +93,28 @@ public class DetailActivityTest {
         assertTrue("Type of activity is not SettingsActivity class: "+shadowIntent.getComponent().getClassName(),
                 shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));
 
+    }
+
+    @Test
+    public void testRemoveCompany() throws Exception {
+
+        Activity activity = (Activity)activityController.start().resume().get();
+
+        //Simulate a Menu object
+        TestMenu testMenu = new TestMenu(Robolectric.application);
+        new MenuInflater(Robolectric.application).inflate(R.menu.detail, testMenu);
+
+        //Select item 1 (Settings)
+        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
+
+        activity.onOptionsItemSelected(menuItem);
+
+        //Test we move to SettingsActivity.
+        /*Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);*/
+
+        /*assertTrue("Type of activity is not SettingsActivity class: " + shadowIntent.getComponent().getClassName(),
+                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));*/
     }
 
     @Test

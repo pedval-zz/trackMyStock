@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
@@ -65,12 +66,12 @@ public class CompanyListActivityTest {
         //Test the first item is Settings
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
         assertTrue("First menu is not Settings: " + menuItem.getItemId(),
-                menuItem.getItemId() == R.id.action_settings);
+                menuItem.getItemId() == R.id.action_add_company);
 
         //Test the second item is Settings
         menuItem = (TestMenuItem)testMenu.getItem(1);
         assertTrue("First menu is not Add Company: " + menuItem.getItemId(),
-                menuItem.getItemId() == R.id.action_add_company);
+                menuItem.getItemId() == R.id.action_listActions);
     }
 
     @Test
@@ -82,10 +83,13 @@ public class CompanyListActivityTest {
         TestMenu testMenu = new TestMenu(Robolectric.application);
         new MenuInflater(Robolectric.application).inflate(R.menu.company_list, testMenu);
 
-        //Select item 0 (Settings)
-        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
+        //Select item 1 (Settings)
+        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(1);
 
-        activity.onOptionsItemSelected(menuItem);
+        SubMenu subMenu = menuItem.getSubMenu();
+        TestMenuItem subMenuItem = (TestMenuItem)subMenu.getItem(0);
+
+        activity.onOptionsItemSelected(subMenuItem);
 
         //Test we move to SettingsActivity.
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
@@ -105,7 +109,7 @@ public class CompanyListActivityTest {
         new MenuInflater(Robolectric.application).inflate(R.menu.company_list, testMenu);
 
         //Select item 1 (Add company)
-        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(1);
+        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
         activity.onOptionsItemSelected(menuItem);
 

@@ -3,6 +3,7 @@ package com.pedrovalencia.trackmystock.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuInflater;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -68,21 +69,24 @@ public class AddCompanyActivityTest {
         //Test the first item is Settings
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
         assertTrue("First menu is not Settings: " + menuItem.getItemId(),
-                menuItem.getItemId() == R.id.action_settings);
+                menuItem.getItemId() == R.id.action_listActions);
 
     }
 
     @Test
     public void testOnOptionsItemSelected() throws Exception {
 
-        Activity activity = (Activity)activityController.start().resume().get();
+        Activity activity = (Activity)activityController.get();
         //Simulate a Menu object
         TestMenu testMenu = new TestMenu(Robolectric.application);
         new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
 
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
 
-        activity.onOptionsItemSelected(menuItem);
+        SubMenu subMenu = menuItem.getSubMenu();
+        TestMenuItem subMenuItem = (TestMenuItem)subMenu.getItem(0);
+
+        activity.onOptionsItemSelected(subMenuItem);
 
         //Test we move to SettingsActivity.
         Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();

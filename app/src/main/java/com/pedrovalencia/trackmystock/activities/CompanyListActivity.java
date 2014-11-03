@@ -60,6 +60,15 @@ public class CompanyListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO two pane version for tablets (UNCOMMENT AND FINISH)
+    /*public void onItemSelected(int position) {
+
+        //1 pane version
+        Intent intent = new Intent(this, DetailActivity.class)
+                .putExtra(DetailActivity.POSITION, position);
+        startActivity(intent);
+    }*/
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -69,6 +78,10 @@ public class CompanyListActivity extends ActionBarActivity {
         private CompanyListAdapter companyListAdapter;
         private ListView mListView;
 
+        public interface Callback {
+            public void onItemSelected(int position);
+        }
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -76,7 +89,7 @@ public class CompanyListActivity extends ActionBarActivity {
 
         private static final String[] COMPANY_COLUMNS = new String[] {
                 CompanyContract.CompanyEntry.COLUMN_NAME,
-                CompanyContract.CompanyEntry.COLUMN_CHANGE
+                CompanyContract.CompanyEntry.COLUMN_SYMBOL
         };
 
         @Override
@@ -108,8 +121,20 @@ public class CompanyListActivity extends ActionBarActivity {
             //one row
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    //TODO send the needed info to DetailActivity to get the proper info
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    //TODO uncomment when 2 pane must be done
+                    //((Callback)getActivity()).onItemSelected(position);
+                    Cursor cursor = companyListAdapter.getCursor();
+                    if (cursor != null && cursor.moveToPosition(position)) {
+                        Intent intent = new Intent(getActivity(), DetailActivity.class);
+                        intent.putExtra(DetailActivity.NAME, cursor.getString(CompanyContract.CompanyEntry.COLUMN_NAME_POS));
+                        intent.putExtra(DetailActivity.SYMBOL, cursor.getString(CompanyContract.CompanyEntry.COLUMN_SYMBOL_POS));
+                        intent.putExtra(DetailActivity.PRICE, cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_PRICE_POS));
+                        intent.putExtra(DetailActivity.LAST_UPDATE, cursor.getString(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE_POS));
+                        intent.putExtra(DetailActivity.HIGH, cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_HIGH_POS));
+                        intent.putExtra(DetailActivity.LOW, cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_LOW_POS));
+                        startActivity(intent);
+                    }
                 }
             });
 
