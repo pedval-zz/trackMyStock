@@ -3,6 +3,7 @@ package com.pedrovalencia.trackmystock.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,9 @@ import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.data.CompanyContract;
+import com.pedrovalencia.trackmystock.util.CompanySearchUtil;
+
+import java.util.ArrayList;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -38,11 +42,6 @@ public class DetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
-
-            /*String date = getIntent().getStringExtra(DATE_KEY);
-
-            Bundle args = new Bundle();
-            args.putString(DATE_KEY, date);*/
 
             Bundle args = new Bundle();
             args.putString(NAME, getIntent().getStringExtra(NAME));
@@ -134,8 +133,15 @@ public class DetailActivity extends ActionBarActivity {
                                 null,
                                 null);
 
-                        Intent intent = new Intent(getActivity(), CompanyListActivity.class);
+                        Cursor cursor = getActivity().getContentResolver().query(CompanyContract.CompanyEntry.CONTENT_URI, null, null, null, null);
+                        Intent intent;
+                        if(cursor.getCount() > 0) {
+                            intent = new Intent(getActivity(), CompanyListActivity.class);
+                        } else {
+                            intent = new Intent(getActivity(), EmptyListActivity.class);
+                        }
                         startActivity(intent);
+
                     }
                 });
                 builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -191,12 +197,12 @@ public class DetailActivity extends ActionBarActivity {
 
         private void createChart(View rootView) {
 
-            GraphView.GraphViewData[] data = new GraphView.GraphViewData[] {
-                    new GraphView.GraphViewData(1, 2.0d)
-                    , new GraphView.GraphViewData(2, 1.5d)
-                    , new GraphView.GraphViewData(3, 2.5d)
-                    , new GraphView.GraphViewData(4, 1.0d)
-            };
+            ArrayList<Double> historic = CompanySearchUtil.getHistoric(mSymbol, CompanySearchUtil.getHistoricValue(getActivity()));
+
+            GraphView.GraphViewData[] data = new GraphView.GraphViewData[historic.size()];
+            for(int i = 0; i < historic.size(); i++) {
+                data[i] = new GraphView.GraphViewData(i + 1, historic.get(i));
+            }
 
             // init example series data
             GraphViewSeries exampleSeries = new GraphViewSeries(getActivity().getResources().getString(R.string.company_historic),

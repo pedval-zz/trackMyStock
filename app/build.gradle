@@ -30,6 +30,7 @@ task jacoco
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'joda-time:joda-time:1.6.1'
 
     androidTestCompile 'junit:junit:4.11'
     androidTestCompile('org.robolectric:robolectric:2.3') {
