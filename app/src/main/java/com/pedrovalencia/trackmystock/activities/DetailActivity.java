@@ -96,13 +96,24 @@ public class DetailActivity extends ActionBarActivity {
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             //Method that creates chart.
-            createChart(rootView);
+            //createChart(rootView);
             return rootView;
         }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            mSymbol = getActivity().getIntent().getStringExtra(SYMBOL);
+
+            HistoricFragment historicFragment = new HistoricFragment();
+            Bundle args = new Bundle();
+            args.putString(SYMBOL, mSymbol);
+            historicFragment.setArguments(args);
+
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, historicFragment)
+                    .commit();
             setHasOptionsMenu(true);
         }
 
@@ -194,15 +205,47 @@ public class DetailActivity extends ActionBarActivity {
                 lowTextView.setText(String.valueOf(args.getDouble(DetailActivity.LOW)));
             }
         }
+    }
+
+    public static class HistoricFragment extends Fragment {
+
+        private String mSymbol;
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            mSymbol = getActivity().getIntent().getStringExtra(SYMBOL);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+
+            //Method that creates chart.
+            createChart(rootView);
+            return rootView;
+        }
+
+        @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+        }
 
         private void createChart(View rootView) {
 
-            ArrayList<Double> historic = CompanySearchUtil.getHistoric(mSymbol, CompanySearchUtil.getHistoricValue(getActivity()));
+            /*ArrayList<Double> historic = CompanySearchUtil.getHistoric(mSymbol, CompanySearchUtil.getHistoricValue(getActivity()));
 
             GraphView.GraphViewData[] data = new GraphView.GraphViewData[historic.size()];
             for(int i = 0; i < historic.size(); i++) {
                 data[i] = new GraphView.GraphViewData(i + 1, historic.get(i));
-            }
+            }*/
+
+            GraphView.GraphViewData[] data = new GraphView.GraphViewData[] {
+                    new GraphView.GraphViewData(1, 1.0d),
+                    new GraphView.GraphViewData(2, 2.0d),
+                    new GraphView.GraphViewData(3, 3.0d)
+            };
 
             // init example series data
             GraphViewSeries exampleSeries = new GraphViewSeries(getActivity().getResources().getString(R.string.company_historic),

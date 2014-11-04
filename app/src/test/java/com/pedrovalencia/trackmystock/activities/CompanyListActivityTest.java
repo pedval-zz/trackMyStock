@@ -43,6 +43,11 @@ public class CompanyListActivityTest {
 
     @After
     public void tearDown() throws Exception {
+        Activity activity = (Activity)activityController.get();
+        activity.getContentResolver().delete(
+                CompanyContract.CompanyEntry.CONTENT_URI,
+                null,
+                null);
         activityController.destroy();
     }
 
