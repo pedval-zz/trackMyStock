@@ -14,18 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.GraphViewStyle;
-import com.jjoe64.graphview.LineGraphView;
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.data.CompanyContract;
-import com.pedrovalencia.trackmystock.util.CompanySearchUtil;
-
-import java.util.ArrayList;
+import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -54,8 +47,15 @@ public class DetailActivity extends ActionBarActivity {
             PlaceholderFragment placeholderFragment = new PlaceholderFragment();
             placeholderFragment.setArguments(args);
 
+            HistoricFragment historicFragment = new HistoricFragment();
+            historicFragment.setArguments(args);
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, placeholderFragment)
+                    .commit();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_detail_container, historicFragment)
                     .commit();
         }
     }
@@ -105,15 +105,6 @@ public class DetailActivity extends ActionBarActivity {
             super.onCreate(savedInstanceState);
 
             mSymbol = getActivity().getIntent().getStringExtra(SYMBOL);
-
-            HistoricFragment historicFragment = new HistoricFragment();
-            Bundle args = new Bundle();
-            args.putString(SYMBOL, mSymbol);
-            historicFragment.setArguments(args);
-
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, historicFragment)
-                    .commit();
             setHasOptionsMenu(true);
         }
 
@@ -204,61 +195,6 @@ public class DetailActivity extends ActionBarActivity {
                 TextView lowTextView = (TextView)getActivity().findViewById(R.id.detail_fragment_low_content);
                 lowTextView.setText(String.valueOf(args.getDouble(DetailActivity.LOW)));
             }
-        }
-    }
-
-    public static class HistoricFragment extends Fragment {
-
-        private String mSymbol;
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            mSymbol = getActivity().getIntent().getStringExtra(SYMBOL);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-
-            //Method that creates chart.
-            createChart(rootView);
-            return rootView;
-        }
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-        }
-
-        private void createChart(View rootView) {
-
-            /*ArrayList<Double> historic = CompanySearchUtil.getHistoric(mSymbol, CompanySearchUtil.getHistoricValue(getActivity()));
-
-            GraphView.GraphViewData[] data = new GraphView.GraphViewData[historic.size()];
-            for(int i = 0; i < historic.size(); i++) {
-                data[i] = new GraphView.GraphViewData(i + 1, historic.get(i));
-            }*/
-
-            GraphView.GraphViewData[] data = new GraphView.GraphViewData[] {
-                    new GraphView.GraphViewData(1, 1.0d),
-                    new GraphView.GraphViewData(2, 2.0d),
-                    new GraphView.GraphViewData(3, 3.0d)
-            };
-
-            // init example series data
-            GraphViewSeries exampleSeries = new GraphViewSeries(getActivity().getResources().getString(R.string.company_historic),
-                    new GraphViewSeries.GraphViewSeriesStyle(getResources().getColor(R.color.main_text_color), 3),data);
-
-            GraphView graphView = new LineGraphView(getActivity(), getActivity().getResources().getString(R.string.company_historic));
-            //Data
-            graphView.addSeries(exampleSeries);
-            //Remove grid
-            graphView.getGraphViewStyle().setGridStyle(GraphViewStyle.GridStyle.NONE);
-
-            LinearLayout layout = (LinearLayout)(rootView.findViewById(R.id.chart_layout));
-            layout.addView(graphView);
         }
     }
 }

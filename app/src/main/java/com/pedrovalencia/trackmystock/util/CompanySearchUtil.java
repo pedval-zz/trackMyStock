@@ -217,7 +217,7 @@ public class CompanySearchUtil {
                 .append(HISTORIC_REQUEST_TODAY_DAY)
                 .append(todayDate[0])
                 .append(HISTORIC_REQUEST_TODAY_YEAR)
-                .append(todayDate[1])
+                .append(todayDate[2])
                 .append(HISTORIC_REQUEST_POSTFIX);
 
         try{
