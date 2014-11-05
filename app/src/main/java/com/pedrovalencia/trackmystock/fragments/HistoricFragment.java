@@ -1,5 +1,6 @@
 package com.pedrovalencia.trackmystock.fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,8 +43,8 @@ public class HistoricFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_historic, container, false);
 
-        //Method that creates chart.
-        createChart(rootView);
+        //Call asynctask to retreive detail and store in database
+        AsyncTask asyncTask = new RetrieveHistoric().execute(new String[]{mSymbol, CompanySearchUtil.getHistoricValue(getActivity())});
         return rootView;
     }
 
@@ -52,18 +53,14 @@ public class HistoricFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    private void createChart(View rootView) {
-
-        //Call asynctask to retreive detail and store in database
-        AsyncTask asyncTask = new RetrieveHistoric().execute(new String[]{mSymbol, CompanySearchUtil.getHistoricValue(getActivity())});
-    }
-
     private class RetrieveHistoric extends AsyncTask<String, Void, ArrayList<Double>> {
 
+        private ProgressDialog progress;
 
         @Override
         protected void onPostExecute(ArrayList<Double> result) {
-
+            super.onPostExecute(result);
+            progress.dismiss();
 
             if(result != null) {
 
@@ -104,6 +101,15 @@ public class HistoricFragment extends Fragment {
             return historic;
         }
 
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress = new ProgressDialog(getActivity());
+            progress.setTitle("Loading");
+            progress.setMessage("Please wait while loading");
+            progress.show();
+        }
     }
 }
 
