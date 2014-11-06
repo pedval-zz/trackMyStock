@@ -31,11 +31,11 @@ public class CompanySearchUtil {
     private static final String REQUEST_POSTFIX = "&callback=YAHOO.Finance.SymbolSuggest.ssCallback";
 
     //Request prefix and postfix for detail query
-    private static final String DETAIL_REQUEST_PREFIX ="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes.csv%3Fs%3D";
+    private static final String DETAIL_REQUEST_PREFIX ="http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes.csv%3Fs%3D";
     private static final String DETAIL_REQUEST_POSTFIX = "%26f%3Dnl1d1t1c1hg%26e%3D.csv'%20and%20columns%3D'name%2Cprice%2Cdate%2Ctime%2Cchange%2Chigh%2Clow'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
 
     //Request prefix, infixes and postfix for historic
-    private static final String HISTORIC_REQUEST_PREFIX = "https://query.yahooapis.com/v1/public/yql?q=select%20col0%2Ccol1%20from%20csv%20where%20url%3D'http%3A%2F%2Fichart.yahoo.com%2Ftable.csv%3Fs%3D";
+    private static final String HISTORIC_REQUEST_PREFIX = "http://query.yahooapis.com/v1/public/yql?q=select%20col0%2Ccol1%20from%20csv%20where%20url%3D'http%3A%2F%2Fichart.yahoo.com%2Ftable.csv%3Fs%3D";
     private static final String HISTORIC_REQUEST_FROM_MONTH = "%26a%3D";
     private static final String HISTORIC_REQUEST_FROM_DAY = "%26b%3D";
     private static final String HISTORIC_REQUEST_FROM_YEAR = "%26c%3D";
@@ -320,4 +320,5 @@ public class CompanySearchUtil {
 
         return prefs.getString("historic_range", "week");
     }
+
 }

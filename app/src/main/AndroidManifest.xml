@@ -26,23 +26,29 @@
         <activity
             android:name=".activities.EmptyListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_main" >
+            android:label="@string/empty_activity_label" >
         </activity>
         <activity
             android:name=".activities.AddCompanyActivity"
-            android:label="@string/title_activity_add_company" >
+            android:label="@string/add_activity_label"
+            android:parentActivityName=".activities.CompanyListActivity">
         </activity>
         <activity
             android:name=".activities.CompanyListActivity"
-            android:label="@string/title_activity_company_list" >
+            android:label="@string/main_activity_label" >
         </activity>
         <activity
             android:name=".activities.DetailActivity"
-            android:label="@string/title_activity_detail" >
+            android:label="@string/main_activity_label"
+            android:parentActivityName=".activities.CompanyListActivity">
         </activity>
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/settings_activity_label"
+            android:parentActivityName=".activities.CompanyListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.CompanyListActivity" />
         </activity>
 
         <!--Register provider -->

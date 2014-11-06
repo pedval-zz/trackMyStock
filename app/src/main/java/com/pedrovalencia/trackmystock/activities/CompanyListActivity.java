@@ -27,6 +27,17 @@ public class CompanyListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Check if when come back, the list is empty
+        Cursor cursor = getContentResolver().query(CompanyContract.CompanyEntry.CONTENT_URI,null,null,null,null);
+
+        if(cursor.getCount() == 0) {
+            Intent intent;
+            intent = new Intent(this, EmptyListActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
+
         setContentView(R.layout.activity_company_list);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

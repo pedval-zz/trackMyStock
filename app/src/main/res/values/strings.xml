@@ -5,7 +5,6 @@
     <string name="dummy_button">Dummy Button</string>
     <!-- main title text -->
     <string name="main_title_text">TrackMyStock</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_add_company">Add Company</string>
@@ -15,15 +14,12 @@
     <!-- EmptyListActivity wording -->
     <string name="add_first_company">Add your first company</string>
     <string name="plus_symbol">+</string>
-    <string name="title_activity_add_company">AddCompanyActivity</string>
 
     <!-- Company name hint (AddCompanyActivity) -->
     <string name="company_name_hint">Company name</string>
 
     <!-- Add company button text -->
     <string name="add_company_accept_button">Accept</string>
-    <string name="title_activity_company_list">CompanyListActivity</string>
-    <string name="title_activity_detail">DetailActivity</string>
 
     <!--DetailActivity elements -->
     <string name="company_name">Name</string>
@@ -45,5 +41,12 @@
     <string name="cancel">Cancel</string>
     <string name="dialog_message">Are you sure you want to delete the company?</string>
     <string name="dialog_title">Confirm deletion</string>
+
+    <!-- Activity labels -->
+    <string name="empty_activity_label">Add</string>
+    <string name="add_activity_label">New</string>
+    <string name="detail_activity_label">Detail</string>
+    <string name="settings_activity_label">Settings</string>
+    <string name="main_activity_label">TrackMyStock</string>
 
 </resources>

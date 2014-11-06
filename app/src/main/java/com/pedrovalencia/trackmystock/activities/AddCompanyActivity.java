@@ -1,13 +1,11 @@
 package com.pedrovalencia.trackmystock.activities;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -23,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class AddCompanyActivity extends ActionBarActivity {
+public class AddCompanyActivity extends Activity{
 
     private final String LOG_TAG = AddCompanyActivity.class.getSimpleName();
     private CompanySignature mCompanySignature;
@@ -49,7 +47,7 @@ public class AddCompanyActivity extends ActionBarActivity {
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.add_company, menu);
@@ -67,7 +65,7 @@ public class AddCompanyActivity extends ActionBarActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     /**
      * Handles the Accept button to go to CompanyListActivity

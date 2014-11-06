@@ -68,7 +68,7 @@ public class DetailActivity extends ActionBarActivity {
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -79,7 +79,7 @@ public class DetailActivity extends ActionBarActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     /**
      * A placeholder fragment containing a simple view.
@@ -154,6 +154,9 @@ public class DetailActivity extends ActionBarActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            } else if (id == R.id.action_settings) {
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
             }
 
 
