@@ -1,6 +1,5 @@
 package com.pedrovalencia.trackmystock.fragments;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,9 +27,7 @@ public class HistoricFragment extends Fragment {
 
     private String mSymbol;
 
-    public HistoricFragment() {
-        super();
-    }
+    public HistoricFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,12 +52,11 @@ public class HistoricFragment extends Fragment {
 
     private class RetrieveHistoric extends AsyncTask<String, Void, ArrayList<Double>> {
 
-        private ProgressDialog progress;
+        //private ProgressDialog progress;
 
         @Override
         protected void onPostExecute(ArrayList<Double> result) {
             super.onPostExecute(result);
-            progress.dismiss();
 
             if(result != null) {
 
@@ -82,12 +78,12 @@ public class HistoricFragment extends Fragment {
                 LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
                 layout.addView(graphView);
             } else {
-                //TODO check when no results
+
                 LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
 
                 TextView noResultTextView =new TextView(getActivity());
                 noResultTextView.setLayoutParams(layout.getLayoutParams());
-                noResultTextView.setText("No historic found");
+                noResultTextView.setText(getActivity().getString(R.string.historic_no_results));
                 layout.addView(noResultTextView);
             }
 
@@ -105,10 +101,8 @@ public class HistoricFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress = new ProgressDialog(getActivity());
-            progress.setTitle("Loading");
-            progress.setMessage("Please wait while loading");
-            progress.show();
+
+            
         }
     }
 }
