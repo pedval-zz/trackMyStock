@@ -28,9 +28,7 @@ public class HistoricFragment extends Fragment {
 
     private String mSymbol;
 
-    public HistoricFragment() {
-        super();
-    }
+    public HistoricFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,9 +41,15 @@ public class HistoricFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_historic, container, false);
 
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         //Call asynctask to retreive detail and store in database
         AsyncTask asyncTask = new RetrieveHistoric().execute(new String[]{mSymbol, CompanySearchUtil.getHistoricValue(getActivity())});
-        return rootView;
     }
 
     @Override
@@ -106,8 +110,8 @@ public class HistoricFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             progress = new ProgressDialog(getActivity());
-            progress.setTitle("Loading");
-            progress.setMessage("Please wait while loading");
+            progress.setTitle(getActivity().getString(R.string.historic_loading));
+            progress.setMessage(getActivity().getString(R.string.historic_please_wait));
             progress.show();
         }
     }

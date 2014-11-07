@@ -58,6 +58,19 @@
             android:enabled="true"
             android:exported="false"
             android:syncable="true"></provider>
+
+        <service
+            android:name=".services.LoadCompanyService"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter" />
+        </service>
+
     </application>
 
 </manifest>
