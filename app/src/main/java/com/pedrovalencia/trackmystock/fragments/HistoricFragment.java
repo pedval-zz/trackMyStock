@@ -1,5 +1,6 @@
 package com.pedrovalencia.trackmystock.fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,9 +41,15 @@ public class HistoricFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_historic, container, false);
 
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         //Call asynctask to retreive detail and store in database
         AsyncTask asyncTask = new RetrieveHistoric().execute(new String[]{mSymbol, CompanySearchUtil.getHistoricValue(getActivity())});
-        return rootView;
     }
 
     @Override
@@ -52,11 +59,12 @@ public class HistoricFragment extends Fragment {
 
     private class RetrieveHistoric extends AsyncTask<String, Void, ArrayList<Double>> {
 
-        //private ProgressDialog progress;
+        private ProgressDialog progress;
 
         @Override
         protected void onPostExecute(ArrayList<Double> result) {
             super.onPostExecute(result);
+            progress.dismiss();
 
             if(result != null) {
 
@@ -78,12 +86,12 @@ public class HistoricFragment extends Fragment {
                 LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
                 layout.addView(graphView);
             } else {
-
+                //TODO check when no results
                 LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
 
                 TextView noResultTextView =new TextView(getActivity());
                 noResultTextView.setLayoutParams(layout.getLayoutParams());
-                noResultTextView.setText(getActivity().getString(R.string.historic_no_results));
+                noResultTextView.setText("No historic found");
                 layout.addView(noResultTextView);
             }
 
@@ -101,8 +109,10 @@ public class HistoricFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            
+            progress = new ProgressDialog(getActivity());
+            progress.setTitle(getActivity().getString(R.string.historic_loading));
+            progress.setMessage(getActivity().getString(R.string.historic_please_wait));
+            progress.show();
         }
     }
 }

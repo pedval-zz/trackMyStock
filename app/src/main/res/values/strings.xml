@@ -50,7 +50,8 @@
     <string name="main_activity_label">TrackMyStock</string>
 
     <!-- Historic fragment elements -->
-    <string name="historic_loading">Loading...</string>
+    <string name="historic_loading">Loading</string>
     <string name="historic_no_results">No historic found</string>
+    <string name="historic_please_wait">Please wait while loading</string>
 
 </resources>
