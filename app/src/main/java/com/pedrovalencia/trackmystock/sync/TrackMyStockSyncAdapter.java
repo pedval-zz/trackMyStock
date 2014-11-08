@@ -19,11 +19,6 @@ import com.pedrovalencia.trackmystock.data.CompanyContract;
 import com.pedrovalencia.trackmystock.domain.CompanyDetail;
 import com.pedrovalencia.trackmystock.util.CompanySearchUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created by pedrovalencia on 07/11/14.
  */
@@ -58,20 +53,7 @@ public class TrackMyStockSyncAdapter extends AbstractThreadedSyncAdapter {
             CompanyDetail companyNewDetail = CompanySearchUtil.getDetail(symbol);
 
             ContentValues newValues = new ContentValues();
-            //newValues.put(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE, companyNewDetail.getDate());
-
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-            // Get the date today using Calendar object.
-            Date today = Calendar.getInstance().getTime();
-            // Using DateFormat format method we can create a string
-            // representation of a date with the defined format.
-            String reportDate = df.format(today);
-
-            Log.d(TAG, "DATE: "+ reportDate);
-
-
-            newValues.put(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE, reportDate);
+            newValues.put(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE, companyNewDetail.getDate());
             newValues.put(CompanyContract.CompanyEntry.COLUMN_PRICE, companyNewDetail.getPrice());
             newValues.put(CompanyContract.CompanyEntry.COLUMN_HIGH, companyNewDetail.getHigh());
             newValues.put(CompanyContract.CompanyEntry.COLUMN_LOW, companyNewDetail.getLow());
