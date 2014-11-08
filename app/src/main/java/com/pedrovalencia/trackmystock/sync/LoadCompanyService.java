@@ -1,4 +1,4 @@
-package com.pedrovalencia.trackmystock.services;
+package com.pedrovalencia.trackmystock.sync;
 
 import android.app.Service;
 import android.content.Intent;
@@ -28,6 +28,6 @@ public class LoadCompanyService extends Service{
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return sTrackMyStockSyncAdapter.getSyncAdapterBinder();
     }
 }

@@ -54,4 +54,8 @@
     <string name="historic_no_results">No historic found</string>
     <string name="historic_please_wait">Please wait while loading</string>
 
+    <!-- Sync adapter-->
+    <string name="sync_account_type">trackmystock.example.com</string>
+    <string name="content_authority">com.pedrovalencia.trackmystock.app</string>
+
 </resources>

@@ -20,7 +20,7 @@ import android.widget.ListView;
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.adapters.CompanyListAdapter;
 import com.pedrovalencia.trackmystock.data.CompanyContract;
-import com.pedrovalencia.trackmystock.services.TrackMyStockSyncAdapter;
+import com.pedrovalencia.trackmystock.sync.TrackMyStockSyncAdapter;
 
 
 public class CompanyListActivity extends ActionBarActivity {
@@ -45,7 +45,6 @@ public class CompanyListActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
         TrackMyStockSyncAdapter.initializeSyncAdapter(this);
     }
 
