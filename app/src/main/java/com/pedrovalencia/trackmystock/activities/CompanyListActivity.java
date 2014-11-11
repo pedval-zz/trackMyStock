@@ -29,16 +29,6 @@ public class CompanyListActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Check if when come back, the list is empty
-        Cursor cursor = getContentResolver().query(CompanyContract.CompanyEntry.CONTENT_URI,null,null,null,null);
-
-        if(cursor.getCount() == 0) {
-            Intent intent;
-            intent = new Intent(this, EmptyListActivity.class);
-            startActivity(intent);
-            this.finish();
-        }
-
         setContentView(R.layout.activity_company_list);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -48,6 +38,10 @@ public class CompanyListActivity extends ActionBarActivity {
         TrackMyStockSyncAdapter.initializeSyncAdapter(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,15 +67,6 @@ public class CompanyListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO two pane version for tablets (UNCOMMENT AND FINISH)
-    /*public void onItemSelected(int position) {
-
-        //1 pane version
-        Intent intent = new Intent(this, DetailActivity.class)
-                .putExtra(DetailActivity.POSITION, position);
-        startActivity(intent);
-    }*/
-
 
     /**
      * A placeholder fragment containing a simple view.
@@ -90,10 +75,6 @@ public class CompanyListActivity extends ActionBarActivity {
 
         private CompanyListAdapter companyListAdapter;
         private ListView mListView;
-
-        public interface Callback {
-            public void onItemSelected(int position);
-        }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -135,8 +116,7 @@ public class CompanyListActivity extends ActionBarActivity {
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    //TODO uncomment when 2 pane must be done
-                    //((Callback)getActivity()).onItemSelected(position);
+
                     Cursor cursor = companyListAdapter.getCursor();
                     if (cursor != null && cursor.moveToPosition(position)) {
                         Intent intent = new Intent(getActivity(), DetailActivity.class);

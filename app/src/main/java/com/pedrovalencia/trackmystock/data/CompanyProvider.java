@@ -4,7 +4,6 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -106,7 +105,7 @@ public class CompanyProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues contentValues) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
-        Uri returnUri;
+        Uri returnUri = null;
 
         switch(match) {
             case COMPANY:
@@ -114,8 +113,6 @@ public class CompanyProvider extends ContentProvider {
                 long _id = db.insert(CompanyContract.CompanyEntry.TABLE_NAME, null, contentValues);
                 if(_id > 0) {
                     returnUri = CompanyContract.CompanyEntry.buildCompanyUri(contentValues.getAsString(CompanyContract.CompanyEntry.COLUMN_SYMBOL));
-                } else {
-                    throw new SQLException("Failed to insert row into " + uri);
                 }
                 break;
             }

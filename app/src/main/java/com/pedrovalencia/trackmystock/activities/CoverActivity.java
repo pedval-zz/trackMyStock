@@ -20,8 +20,6 @@ public class CoverActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cover);
 
-
-
     }
 
     @Override

@@ -53,7 +53,7 @@ public class CompanyListActivityTest {
 
     @Test
     public void testActivityNotNull() throws Exception {
-        Activity activity = (Activity)activityController.start().resume().get();
+        Activity activity = (Activity)activityController.get();
         assertTrue("Activity is null", activity != null);
     }
 
@@ -126,13 +126,6 @@ public class CompanyListActivityTest {
                 shadowIntent.getComponent().getClassName().equals(AddCompanyActivity.class.getCanonicalName()));
     }
 
-
-    @Test
-    public void testFragmentInActivity() throws Exception {
-        CompanyListActivity.PlaceholderFragment fragment = new CompanyListActivity.PlaceholderFragment();
-        assertTrue("Fragment is null", fragment != null);
-    }
-
     @Test
     public void testElementsInFragment() throws Exception {
 
@@ -146,7 +139,8 @@ public class CompanyListActivityTest {
 
         Activity activity = (Activity)activityController.get();
 
-        //We first insert two elements
+        //We first insert two elements.
+
         ContentValues contentValues1 = new ContentValues();
         contentValues1.put(CompanyContract.CompanyEntry.COLUMN_SYMBOL, "GOOG");
         contentValues1.put(CompanyContract.CompanyEntry.COLUMN_NAME, "Google Inc.");
@@ -165,6 +159,7 @@ public class CompanyListActivityTest {
         contentValues2.put(CompanyContract.CompanyEntry.COLUMN_LOW, 2.12);
         contentValues2.put(CompanyContract.CompanyEntry.COLUMN_CHANGE, "-2.32");
 
+
         activity.getContentResolver().insert(CompanyContract.CompanyEntry.CONTENT_URI,
                 contentValues1);
         activity.getContentResolver().insert(CompanyContract.CompanyEntry.CONTENT_URI,
@@ -179,9 +174,13 @@ public class CompanyListActivityTest {
         Fragment fragment = new CompanyListActivity.PlaceholderFragment();
         FragmentTestUtil.startFragment(fragment);
 
+        ListView listView = (ListView)activity.findViewById(R.id.company_list_fragment_list_view);
+
+        cursor = (Cursor)listView.getItemAtPosition(0);
+
+        assertTrue("Cursor does not have the proper number of elements",
+                cursor.getCount() == 2);
+
     }
 
-
-
-    //TODO navigation to previous activity
 }

@@ -2,8 +2,6 @@ package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.MenuInflater;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -21,9 +19,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowIntent;
-import org.robolectric.tester.android.view.TestMenu;
-import org.robolectric.tester.android.view.TestMenuItem;
 import org.robolectric.util.ActivityController;
 
 import static org.junit.Assert.assertTrue;
@@ -53,47 +48,6 @@ public class AddCompanyActivityTest {
     public void testActivityNotNull() throws Exception {
         Activity activity = (Activity)activityController.get();
         assertTrue("Activity is null", activity != null);
-    }
-
-    @Test
-    public void testOnCreateOptionsMenu() throws Exception {
-
-        Activity activity = (Activity)activityController.get();
-
-        //Simulate a Menu object
-        TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
-
-        activity.onCreateOptionsMenu(testMenu);
-
-        //Test the first item is Settings
-        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
-        assertTrue("First menu is not Settings: " + menuItem.getItemId(),
-                menuItem.getItemId() == R.id.action_listActions);
-
-    }
-
-    @Test
-    public void testOnOptionsItemSelected() throws Exception {
-
-        Activity activity = (Activity)activityController.get();
-        //Simulate a Menu object
-        TestMenu testMenu = new TestMenu(Robolectric.application);
-        new MenuInflater(Robolectric.application).inflate(R.menu.add_company, testMenu);
-
-        TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
-
-        SubMenu subMenu = menuItem.getSubMenu();
-        TestMenuItem subMenuItem = (TestMenuItem)subMenu.getItem(0);
-
-        activity.onOptionsItemSelected(subMenuItem);
-
-        //Test we move to SettingsActivity.
-        Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
-        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
-        assertTrue("Type of activity is not SettingsActivity class: "+shadowIntent.getComponent().getClassName(),
-                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));
-
     }
 
     @Test
