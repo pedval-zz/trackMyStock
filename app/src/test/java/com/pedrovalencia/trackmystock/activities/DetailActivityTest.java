@@ -1,11 +1,7 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.MenuInflater;
-import android.view.SubMenu;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
 
@@ -16,12 +12,10 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowIntent;
 import org.robolectric.tester.android.view.TestMenu;
 import org.robolectric.tester.android.view.TestMenuItem;
 import org.robolectric.util.ActivityController;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -68,7 +62,7 @@ public class DetailActivityTest {
 
     }
 
-    @Test
+    /*@Test
     public void testOnOptionsItemSelected() throws Exception {
         Activity activity = (Activity)activityController.start().resume().get();
         //Simulate a Menu object
@@ -89,9 +83,9 @@ public class DetailActivityTest {
         assertTrue("Type of activity is not SettingsActivity class: "+shadowIntent.getComponent().getClassName(),
                 shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));
 
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void testRemoveCompany() throws Exception {
 
         Activity activity = (Activity)activityController.start().resume().get();
@@ -106,19 +100,21 @@ public class DetailActivityTest {
         activity.onOptionsItemSelected(menuItem);
 
         //Test we move to SettingsActivity.
-        /*Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
-        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);*/
+        *//*Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        ShadowIntent shadowIntent = Robolectric.shadowOf(intent);*//*
 
-        /*assertTrue("Type of activity is not SettingsActivity class: " + shadowIntent.getComponent().getClassName(),
-                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));*/
-    }
+        *//*assertTrue("Type of activity is not SettingsActivity class: " + shadowIntent.getComponent().getClassName(),
+                shadowIntent.getComponent().getClassName().equals(SettingsActivity.class.getCanonicalName()));*//*
+    }*/
 
-    @Test
-    public void testElements() {
-        Activity activity = (Activity)activityController.start().resume().get();
+    /*@Test
+    public void testActivityElements() {
+
+        Fragment fragment = new CompanyListActivity.PlaceholderFragment();
+        FragmentTestUtil.startFragment(fragment);
 
         //Name label
-        TextView nameLabel = (TextView)activity.findViewById(R.id.detail_fragment_name_label);
+        TextView nameLabel = (TextView)fragment.getActivity().findViewById(R.id.detail_fragment_name_label);
         assertNotNull("Name element does not exist", nameLabel);
         assertTrue("Name label text does not match", nameLabel.getText().toString().equals("Name"));
 
@@ -165,5 +161,5 @@ public class DetailActivityTest {
         //Graphic
         LinearLayout graphView = (LinearLayout)activity.findViewById(R.id.chart_layout);
         assertNotNull("Historic chart does not exist", graphView);
-    }
+    }*/
 }

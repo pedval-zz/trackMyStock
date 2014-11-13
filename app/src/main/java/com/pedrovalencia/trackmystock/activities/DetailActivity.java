@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +20,7 @@ import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.data.CompanyContract;
 import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
 
-public class DetailActivity extends ActionBarActivity {
+public class DetailActivity extends FragmentActivity {
 
     public static final String NAME = "name";
     public static final String SYMBOL = "symbol";
@@ -60,26 +60,11 @@ public class DetailActivity extends ActionBarActivity {
         }
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.detail, menu);
-        return true;
+    protected void onResume() {
+        super.onResume();
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     /**
      * A placeholder fragment containing a simple view.
