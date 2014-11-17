@@ -86,7 +86,7 @@ public class HistoricFragment extends Fragment {
                 LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
                 layout.addView(graphView);
             } else {
-                //TODO check when no results
+
                 LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
 
                 TextView noResultTextView =new TextView(getActivity());

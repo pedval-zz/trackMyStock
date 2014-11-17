@@ -70,12 +70,12 @@ public class CompanyListActivityTest {
 
         //Test the first item is Settings
         TestMenuItem menuItem = (TestMenuItem)testMenu.getItem(0);
-        assertTrue("First menu is not Settings: " + menuItem.getItemId(),
+        assertTrue("First menu is not Add company: " + menuItem.getItemId(),
                 menuItem.getItemId() == R.id.action_add_company);
 
         //Test the second item is Settings
         menuItem = (TestMenuItem)testMenu.getItem(1);
-        assertTrue("First menu is not Add Company: " + menuItem.getItemId(),
+        assertTrue("Second menu is not Settings: " + menuItem.getItemId(),
                 menuItem.getItemId() == R.id.action_listActions);
     }
 
@@ -180,6 +180,41 @@ public class CompanyListActivityTest {
 
         assertTrue("Cursor does not have the proper number of elements",
                 cursor.getCount() == 2);
+
+    }
+
+    @Test
+    public void testGoToDetailActivity() throws Exception {
+
+        Activity activity = (Activity)activityController.get();
+
+        //We first a element.
+
+        ContentValues contentValues1 = new ContentValues();
+        contentValues1.put(CompanyContract.CompanyEntry.COLUMN_SYMBOL, "GOOG");
+        contentValues1.put(CompanyContract.CompanyEntry.COLUMN_NAME, "Google Inc.");
+        contentValues1.put(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE, "10272014");
+        contentValues1.put(CompanyContract.CompanyEntry.COLUMN_PRICE, 30.20);
+        contentValues1.put(CompanyContract.CompanyEntry.COLUMN_HIGH, 32.15);
+        contentValues1.put(CompanyContract.CompanyEntry.COLUMN_LOW, 30.12);
+        contentValues1.put(CompanyContract.CompanyEntry.COLUMN_CHANGE, "+2.32");
+
+        activity.getContentResolver().insert(CompanyContract.CompanyEntry.CONTENT_URI,
+                contentValues1);
+
+        activity = (Activity)activityController.start().restart().resume().get();
+        Fragment fragment = new CompanyListActivity.PlaceholderFragment();
+        FragmentTestUtil.startFragment(fragment);
+
+        ListView listView = (ListView)activity.findViewById(R.id.company_list_fragment_list_view);
+
+        listView.performItemClick(null,0,0);
+
+        //Test we move to next activity (DetailActivity) from onResume() event.
+        Intent intent = Robolectric.shadowOf(activity).peekNextStartedActivity();
+        assertTrue("Type of activity is not DetailActivity class: "+intent.getComponent().getClassName(),
+                intent.getComponent().getClassName().equals(DetailActivity.class.getCanonicalName()));
+
 
     }
 

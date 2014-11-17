@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +20,7 @@ import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.data.CompanyContract;
 import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
 
-public class DetailActivity extends FragmentActivity {
+public class DetailActivity extends ActionBarActivity {
 
     public static final String NAME = "name";
     public static final String SYMBOL = "symbol";
@@ -34,35 +34,29 @@ public class DetailActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        if (savedInstanceState == null) {
 
-            Bundle args = new Bundle();
-            args.putString(NAME, getIntent().getStringExtra(NAME));
-            args.putString(SYMBOL, getIntent().getStringExtra(SYMBOL));
-            args.putString(LAST_UPDATE, getIntent().getStringExtra(LAST_UPDATE));
-            args.putDouble(PRICE, getIntent().getDoubleExtra(PRICE, 0.0));
-            args.putDouble(HIGH, getIntent().getDoubleExtra(HIGH, 0.0));
-            args.putDouble(LOW, getIntent().getDoubleExtra(LOW, 0.0));
+        Bundle args = new Bundle();
+        args.putString(NAME, getIntent().getStringExtra(NAME));
+        args.putString(SYMBOL, getIntent().getStringExtra(SYMBOL));
+        args.putString(LAST_UPDATE, getIntent().getStringExtra(LAST_UPDATE));
+        args.putDouble(PRICE, getIntent().getDoubleExtra(PRICE, 0.0));
+        args.putDouble(HIGH, getIntent().getDoubleExtra(HIGH, 0.0));
+        args.putDouble(LOW, getIntent().getDoubleExtra(LOW, 0.0));
 
-            PlaceholderFragment placeholderFragment = new PlaceholderFragment();
-            placeholderFragment.setArguments(args);
+        PlaceholderFragment placeholderFragment = new PlaceholderFragment();
+        placeholderFragment.setArguments(args);
 
-            HistoricFragment historicFragment = new HistoricFragment();
-            historicFragment.setArguments(args);
+        HistoricFragment historicFragment = new HistoricFragment();
+        historicFragment.setArguments(args);
 
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, placeholderFragment)
-                    .commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, placeholderFragment)
+                .commit();
 
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_detail_container, historicFragment)
-                    .commit();
-        }
-    }
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_detail_container, historicFragment)
+                .commit();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
 
@@ -139,7 +133,8 @@ public class DetailActivity extends FragmentActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            } else if (id == R.id.action_settings) {
+            }
+            if (id == R.id.action_settings) {
                 Intent intent = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(intent);
             }

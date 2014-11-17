@@ -60,6 +60,8 @@ public class CompanyProvider extends ContentProvider {
         return true;
     }
 
+
+
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         Cursor retCursor;

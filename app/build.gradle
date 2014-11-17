@@ -22,24 +22,32 @@ android {
     }
     sourceSets {
         androidTest {
+            //android test folder
             setRoot('src/test')
         }
     }
 }
+//we add the jacoco task (located in jacoco.gradle) to test the test coverage
 task jacoco
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Joda date time for date management
     compile 'joda-time:joda-time:1.6.1'
 
+    //JUnit libraray for testing
     androidTestCompile 'junit:junit:4.11'
+
+    //we must exclude commons-logging and httpclient because they are already included
+    //and we want to avoid conflicts
     androidTestCompile('org.robolectric:robolectric:2.3') {
         exclude module: 'commons-logging'
         exclude module: 'httpclient'
     }
 
-    //GraphView library
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.android.support:support-v4:20.0.0'
+    //GraphView library
     compile 'com.jjoe64:graphview:3.1.3'
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.pedrovalencia.trackmystock.activities.CompanyListActivity$PlaceholderFragment" >
 
     <item android:id="@+id/action_discard_company"
         android:title="@string/action_discard_company"
