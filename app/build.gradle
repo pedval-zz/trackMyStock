@@ -26,6 +26,11 @@ android {
             setRoot('src/test')
         }
     }
+    
+   lintOptions {
+        abortOnError false
+   }
+
 }
 //we add the jacoco task (located in jacoco.gradle) to test the test coverage
 task jacoco
