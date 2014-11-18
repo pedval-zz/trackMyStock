@@ -3,8 +3,6 @@ trackMyStock
 
 Uses Android Studio, Gradle, Robolectric and JaCoCo
 
-[![Coverage Status](https://coveralls.io/repos/pedval/trackMyStock/badge.png)](https://coveralls.io/r/pedval/trackMyStock)
-
 ## Testing
 
 ### Test report
