@@ -11,3 +11,5 @@ Just type gradlew clean test to run the test. You will find the report at app/bu
 ### Test coverage
 Just type gradlew clean jacocoTestReport to run the test and test coverage. You will find the test coverage at app/build/jacocoHtml/index.html
 
+## APK
+Apk file can be found at app/app-release.apk
