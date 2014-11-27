@@ -27,7 +27,6 @@
 
         <TextView
             android:id="@+id/detail_fragment_name_content"
-            android:text="Nextub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -54,7 +53,6 @@
 
         <TextView
             android:id="@+id/detail_fragment_price_content"
-            android:text="39.40"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -81,7 +79,6 @@
 
         <TextView
             android:id="@+id/detail_fragment_date_content"
-            android:text="24/10/2014 19:00"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -108,7 +105,6 @@
 
         <TextView
             android:id="@+id/detail_fragment_high_content"
-            android:text="40.0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -135,7 +131,6 @@
 
         <TextView
             android:id="@+id/detail_fragment_low_content"
-            android:text="38.0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
