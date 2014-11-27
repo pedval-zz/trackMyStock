@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +28,19 @@ public class DetailActivity extends ActionBarActivity {
     public static final String LOW = "low";
     public static final String LAST_UPDATE = "update";
 
+    private String mSymbol;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        mSymbol = getIntent().getStringExtra(SYMBOL);
+
         Bundle args = new Bundle();
         args.putString(NAME, getIntent().getStringExtra(NAME));
-        args.putString(SYMBOL, getIntent().getStringExtra(SYMBOL));
+        args.putString(SYMBOL, mSymbol);
         args.putString(LAST_UPDATE, getIntent().getStringExtra(LAST_UPDATE));
         args.putDouble(PRICE, getIntent().getDoubleExtra(PRICE, 0.0));
         args.putDouble(HIGH, getIntent().getDoubleExtra(HIGH, 0.0));
@@ -57,6 +60,62 @@ public class DetailActivity extends ActionBarActivity {
                 .add(R.id.fragment_detail_container, historicFragment)
                 .commit();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_fragment, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_discard_company) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            builder.setMessage(R.string.dialog_message)
+                    .setTitle(R.string.dialog_title);
+
+            // Add the buttons
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // Delete the company selected
+                    getContentResolver().delete(
+                            CompanyContract.CompanyEntry.buildCompanyUri(mSymbol),
+                            null,
+                            null);
+
+                    Cursor cursor = getContentResolver().query(CompanyContract.CompanyEntry.CONTENT_URI, null, null, null, null);
+                    Intent intent;
+                    if(cursor.getCount() > 0) {
+                        intent = new Intent(getApplicationContext(), CompanyListActivity.class);
+                    } else {
+                        intent = new Intent(getApplicationContext(), EmptyListActivity.class);
+                    }
+                    startActivity(intent);
+
+                }
+            });
+            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog and we do nothing.
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -82,65 +141,7 @@ public class DetailActivity extends ActionBarActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
             mSymbol = getActivity().getIntent().getStringExtra(SYMBOL);
-            setHasOptionsMenu(true);
-        }
-
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            inflater.inflate(R.menu.detail_fragment, menu);
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-            if (id == R.id.action_discard_company) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                builder.setMessage(R.string.dialog_message)
-                        .setTitle(R.string.dialog_title);
-
-                // Add the buttons
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Delete the company selected
-                        getActivity().getContentResolver().delete(
-                                CompanyContract.CompanyEntry.buildCompanyUri(mSymbol),
-                                null,
-                                null);
-
-                        Cursor cursor = getActivity().getContentResolver().query(CompanyContract.CompanyEntry.CONTENT_URI, null, null, null, null);
-                        Intent intent;
-                        if(cursor.getCount() > 0) {
-                            intent = new Intent(getActivity(), CompanyListActivity.class);
-                        } else {
-                            intent = new Intent(getActivity(), EmptyListActivity.class);
-                        }
-                        startActivity(intent);
-
-                    }
-                });
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog and we do nothing.
-                    }
-                });
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-            if (id == R.id.action_settings) {
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
-                startActivity(intent);
-            }
-
-
-            return super.onOptionsItemSelected(item);
         }
 
 
