@@ -1,38 +1,65 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
-import com.pedrovalencia.trackmystock.adapters.CompanyListAdapter;
-import com.pedrovalencia.trackmystock.data.CompanyContract;
+import com.pedrovalencia.trackmystock.fragments.CompanyListFragment;
+import com.pedrovalencia.trackmystock.fragments.DetailFragment;
+import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
 import com.pedrovalencia.trackmystock.sync.TrackMyStockSyncAdapter;
 
 
-public class CompanyListActivity extends ActionBarActivity {
+public class CompanyListActivity extends ActionBarActivity implements CompanyListFragment.Callback{
+
+    private boolean mTwoPane;
+    private String mSymbol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_company_list);
+
+        if(findViewById(R.id.detail_id) != null) {
+            //Tablet version
+            mTwoPane = true;
+            //TODO send the symbol
+            mSymbol = getIntent().getStringExtra(DetailActivity.SYMBOL);
+
+            Bundle args = new Bundle();
+            args.putString(DetailActivity.NAME, getIntent().getStringExtra(DetailActivity.NAME));
+            args.putString(DetailActivity.SYMBOL, mSymbol);
+            args.putString(DetailActivity.LAST_UPDATE, getIntent().getStringExtra(DetailActivity.LAST_UPDATE));
+            args.putDouble(DetailActivity.PRICE, getIntent().getDoubleExtra(DetailActivity.PRICE, 7.0));
+            args.putDouble(DetailActivity.HIGH, getIntent().getDoubleExtra(DetailActivity.HIGH, 14.0));
+            args.putDouble(DetailActivity.LOW, getIntent().getDoubleExtra(DetailActivity.LOW, 0.0));
+
+            DetailFragment detailFragment = new DetailFragment();
+            detailFragment.setArguments(args);
+
+            HistoricFragment historicFragment = new HistoricFragment();
+            historicFragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_container, detailFragment)
+                    .commit();
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.historic_container, historicFragment)
+                    .commit();
+
+
+        } else {
+            mTwoPane = false;
+        }
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container_list, new CompanyListFragment())
                     .commit();
         }
         TrackMyStockSyncAdapter.initializeSyncAdapter(this);
@@ -63,94 +90,47 @@ public class CompanyListActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemSelected(String name, String symbol, String lastUpdate,
+                               Double price, Double high, Double low) {
+        if(mTwoPane) {
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+            Bundle args = new Bundle();
+            args.putString(DetailActivity.NAME, name);
+            args.putString(DetailActivity.SYMBOL, symbol);
+            args.putString(DetailActivity.LAST_UPDATE, lastUpdate);
+            args.putDouble(DetailActivity.PRICE, price);
+            args.putDouble(DetailActivity.HIGH, high);
+            args.putDouble(DetailActivity.LOW, low);
 
-        private CompanyListAdapter companyListAdapter;
-        private ListView mListView;
+            DetailFragment placeholderFragment = new DetailFragment();
+            placeholderFragment.setArguments(args);
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+            HistoricFragment historicFragment = new HistoricFragment();
+            historicFragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail_container, placeholderFragment)
+                    .commit();
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.historic_container, historicFragment)
+                    .commit();
+
+        } else {
+
+            Intent intent = new Intent(this, DetailActivity.class);
+            intent.putExtra(DetailActivity.NAME, name);
+            intent.putExtra(DetailActivity.SYMBOL, symbol);
+            intent.putExtra(DetailActivity.PRICE, price);
+            intent.putExtra(DetailActivity.LAST_UPDATE, lastUpdate);
+            intent.putExtra(DetailActivity.HIGH, high);
+            intent.putExtra(DetailActivity.LOW, low);
+            startActivity(intent);
+
         }
 
-        private static final String[] COMPANY_COLUMNS = new String[] {
-                CompanyContract.CompanyEntry.COLUMN_NAME,
-                CompanyContract.CompanyEntry.COLUMN_SYMBOL
-        };
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            getLoaderManager().restartLoader(0, null, this);
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-            getLoaderManager().initLoader(0, null, this);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_company_list, container, false);
-
-            //Get a reference to the ListView and attach the adapter to it
-            companyListAdapter = new CompanyListAdapter(getActivity(), null, 0);
-            mListView = (ListView) rootView.findViewById(R.id.company_list_fragment_list_view);
-            mListView.setAdapter(companyListAdapter);
-
-            //Attach onItemClickListener. This will be triggered each time the customer clicks on
-            //one row
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                    Cursor cursor = companyListAdapter.getCursor();
-                    if (cursor != null && cursor.moveToPosition(position)) {
-                        Intent intent = new Intent(getActivity(), DetailActivity.class);
-                        intent.putExtra(DetailActivity.NAME, cursor.getString(CompanyContract.CompanyEntry.COLUMN_NAME_POS));
-                        intent.putExtra(DetailActivity.SYMBOL, cursor.getString(CompanyContract.CompanyEntry.COLUMN_SYMBOL_POS));
-                        intent.putExtra(DetailActivity.PRICE, cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_PRICE_POS));
-                        intent.putExtra(DetailActivity.LAST_UPDATE, cursor.getString(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE_POS));
-                        intent.putExtra(DetailActivity.HIGH, cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_HIGH_POS));
-                        intent.putExtra(DetailActivity.LOW, cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_LOW_POS));
-                        startActivity(intent);
-                    }
-                }
-            });
-
-            return rootView;
-        }
-
-        @Override
-        public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-            return new CursorLoader(
-                    getActivity(),
-                    CompanyContract.CompanyEntry.getCompany(),
-                    COMPANY_COLUMNS,
-                    null,
-                    null,
-                    null
-            );
-        }
-
-        @Override
-        public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-            companyListAdapter.swapCursor(cursor);
-        }
-
-        @Override
-        public void onLoaderReset(Loader<Cursor> cursorLoader) {
-            companyListAdapter.swapCursor(null);
-        }
 
     }
+
 }

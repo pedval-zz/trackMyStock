@@ -10,17 +10,15 @@
     tools:context="com.pedrovalencia.trackmystock.activities.DetailActivity">
 
     <FrameLayout
-        android:id="@+id/container"
+        android:id="@+id/detail_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.pedrovalencia.trackmystock.activities.DetailActivity"
         tools:ignore="MergeRootFrame" />
 
     <FrameLayout
-        android:id="@+id/fragment_detail_container"
+        android:id="@+id/historic_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.pedrovalencia.trackmystock.activities.DetailActivity"
         tools:ignore="MergeRootFrame" />
 
 

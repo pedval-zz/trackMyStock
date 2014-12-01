@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.pedrovalencia.trackmystock.activities.CompanyListActivity"
-    tools:ignore="MergeRootFrame" />
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/container_list"
+android:name="com.pedrovalencia.trackmystock.fragments.CompanyListFragment"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.pedrovalencia.trackmystock.fragments.CompanyListFragment"
+tools:layout="@android:layout/list_content"/>

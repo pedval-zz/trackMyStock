@@ -7,6 +7,7 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:padding="16dp"
     android:orientation="horizontal"
+    android:background="@drawable/touch_selector"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView

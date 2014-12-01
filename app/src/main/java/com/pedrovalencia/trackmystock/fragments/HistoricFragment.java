@@ -66,7 +66,7 @@ public class HistoricFragment extends Fragment {
             super.onPostExecute(result);
             progress.dismiss();
 
-            if(result != null) {
+            if(result != null && result.size() > 0) {
 
                 GraphView.GraphViewData[] data = new GraphView.GraphViewData[result.size()];
                 for (int i = 0; i < result.size(); i++) {
@@ -83,11 +83,11 @@ public class HistoricFragment extends Fragment {
                 //Remove grid
                 graphView.getGraphViewStyle().setGridStyle(GraphViewStyle.GridStyle.NONE);
 
-                LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
+                LinearLayout layout = (LinearLayout) (getView().findViewById(R.id.chart_layout));
                 layout.addView(graphView);
             } else {
 
-                LinearLayout layout = (LinearLayout) (getActivity().findViewById(R.id.chart_layout));
+                LinearLayout layout = (LinearLayout) (getView().findViewById(R.id.chart_layout));
 
                 TextView noResultTextView =new TextView(getActivity());
                 noResultTextView.setLayoutParams(layout.getLayoutParams());

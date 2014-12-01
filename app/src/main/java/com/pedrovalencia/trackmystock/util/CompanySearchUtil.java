@@ -255,7 +255,11 @@ public class CompanySearchUtil {
             historic = new ArrayList<Double>(jsonArray.length() - 1);
             // Extract the Place descriptions from the results
             for(int i=1; i < jsonArray.length(); i++) {
-                historic.add(jsonArray.getJSONObject(i).getDouble("col1"));
+                //Not very elegant, but sometimes the results are not the expected
+                if(jsonArray.getJSONObject(i).has("col1") &&
+                        jsonArray.getJSONObject(i).get("col1") instanceof Double) {
+                    historic.add(jsonArray.getJSONObject(i).getDouble("col1"));
+                }
             }
 
         } catch (JSONException ex) {

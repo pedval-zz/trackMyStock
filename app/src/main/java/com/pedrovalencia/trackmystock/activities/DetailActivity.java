@@ -5,18 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.data.CompanyContract;
+import com.pedrovalencia.trackmystock.fragments.DetailFragment;
 import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
 
 public class DetailActivity extends ActionBarActivity {
@@ -39,25 +34,20 @@ public class DetailActivity extends ActionBarActivity {
         mSymbol = getIntent().getStringExtra(SYMBOL);
 
         Bundle args = new Bundle();
-        args.putString(NAME, getIntent().getStringExtra(NAME));
         args.putString(SYMBOL, mSymbol);
-        args.putString(LAST_UPDATE, getIntent().getStringExtra(LAST_UPDATE));
-        args.putDouble(PRICE, getIntent().getDoubleExtra(PRICE, 0.0));
-        args.putDouble(HIGH, getIntent().getDoubleExtra(HIGH, 0.0));
-        args.putDouble(LOW, getIntent().getDoubleExtra(LOW, 0.0));
 
-        PlaceholderFragment placeholderFragment = new PlaceholderFragment();
-        placeholderFragment.setArguments(args);
+        DetailFragment detailFragment = new DetailFragment();
+        detailFragment.setArguments(args);
 
         HistoricFragment historicFragment = new HistoricFragment();
         historicFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, placeholderFragment)
+                .add(R.id.detail_container, detailFragment)
                 .commit();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_detail_container, historicFragment)
+                .add(R.id.historic_container, historicFragment)
                 .commit();
 
     }
@@ -118,67 +108,4 @@ public class DetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        private String mSymbol;
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            //Method that creates chart.
-            //createChart(rootView);
-            return rootView;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            mSymbol = getActivity().getIntent().getStringExtra(SYMBOL);
-        }
-
-
-        @Override
-        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-            Bundle args = getArguments();
-            if(args != null && args.containsKey(DetailActivity.NAME)
-                    && args.containsKey(DetailActivity.SYMBOL)
-                    && args.containsKey(DetailActivity.LAST_UPDATE)
-                    && args.containsKey(DetailActivity.PRICE)
-                    && args.containsKey(DetailActivity.HIGH)
-                    && args.containsKey(DetailActivity.LOW)
-                    && args.containsKey(DetailActivity.PRICE)) {
-
-                //Name (symbol) field
-                TextView nameTextView = (TextView)getActivity().findViewById(R.id.detail_fragment_name_content);
-                mSymbol = args.getString(DetailActivity.SYMBOL);
-                nameTextView.setText(args.getString(DetailActivity.NAME) + " (" + mSymbol + ")");
-
-
-                //Price
-                TextView priceTextView = (TextView)getActivity().findViewById(R.id.detail_fragment_price_content);
-                priceTextView.setText(String.valueOf(args.getDouble(DetailActivity.PRICE)));
-
-                //Last update
-                TextView updateTextView = (TextView)getActivity().findViewById(R.id.detail_fragment_date_content);
-                updateTextView.setText(args.getString(DetailActivity.LAST_UPDATE));
-
-                //High price
-                TextView highTextView = (TextView)getActivity().findViewById(R.id.detail_fragment_high_content);
-                highTextView.setText(String.valueOf(args.getDouble(DetailActivity.HIGH)));
-
-                //Low price
-                TextView lowTextView = (TextView)getActivity().findViewById(R.id.detail_fragment_low_content);
-                lowTextView.setText(String.valueOf(args.getDouble(DetailActivity.LOW)));
-            }
-        }
-    }
 }
