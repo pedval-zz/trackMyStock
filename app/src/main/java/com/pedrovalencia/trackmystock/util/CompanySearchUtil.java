@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Created by pedrovalencia on 24/10/14.
@@ -255,9 +256,8 @@ public class CompanySearchUtil {
             historic = new ArrayList<Double>(jsonArray.length() - 1);
             // Extract the Place descriptions from the results
             for(int i=1; i < jsonArray.length(); i++) {
-                //Not very elegant, but sometimes the results are not the expected
                 if(jsonArray.getJSONObject(i).has("col1") &&
-                        jsonArray.getJSONObject(i).get("col1") instanceof Double) {
+                        isDouble((String)jsonArray.getJSONObject(i).get("col1"))) {
                     historic.add(jsonArray.getJSONObject(i).getDouble("col1"));
                 }
             }
@@ -270,14 +270,9 @@ public class CompanySearchUtil {
         return historic;
     }
 
-    /**
-     * Get the company historic by its symbol
-     * @param
-     * @return
-     */
-    /*public static Historic getHistoric(String symbol) {
-
-    }*/
+    private static boolean isDouble(String number) {
+        return Pattern.matches("\\d+\\.\\d+", number);
+    }
 
     //Remove the prefix and last bracket
     private static String removeNoJSONPart(String response) {

@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.SubMenu;
 
 import com.pedrovalencia.trackmystock.R;
+import com.pedrovalencia.trackmystock.fragments.DetailFragment;
 
 import org.junit.After;
 import org.junit.Before;
@@ -76,7 +77,7 @@ public class DetailActivityTest {
     public void testGoToSettings() throws Exception {
 
         //Start PlaceholderFragment
-        DetailActivity.PlaceholderFragment placeholderFragment = new DetailActivity.PlaceholderFragment();
+        DetailFragment placeholderFragment = new DetailFragment();
         FragmentTestUtil.startFragment(placeholderFragment);
 
         //Simulate a Menu object
@@ -106,7 +107,7 @@ public class DetailActivityTest {
     public void testRemoveCompany() throws Exception {
 
         //Start PlaceholderFragment
-        DetailActivity.PlaceholderFragment placeholderFragment = new DetailActivity.PlaceholderFragment();
+        DetailFragment placeholderFragment = new DetailFragment();
         FragmentTestUtil.startFragment(placeholderFragment);
 
         FragmentActivity activity = placeholderFragment.getActivity();

@@ -71,6 +71,7 @@ public class HistoricFragment extends Fragment {
                 GraphView.GraphViewData[] data = new GraphView.GraphViewData[result.size()];
                 for (int i = 0; i < result.size(); i++) {
                     data[i] = new GraphView.GraphViewData(i + 1, result.get(i));
+                    
                 }
 
                 // init example series data
