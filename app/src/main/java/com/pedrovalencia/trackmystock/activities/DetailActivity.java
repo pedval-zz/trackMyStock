@@ -1,16 +1,9 @@
 package com.pedrovalencia.trackmystock.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.pedrovalencia.trackmystock.R;
-import com.pedrovalencia.trackmystock.data.CompanyContract;
 import com.pedrovalencia.trackmystock.fragments.DetailFragment;
 import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
 
@@ -43,16 +36,16 @@ public class DetailActivity extends ActionBarActivity {
         historicFragment.setArguments(args);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.detail_container, detailFragment)
+                .replace(R.id.detail_container, detailFragment)
                 .commit();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.historic_container, historicFragment)
+                .replace(R.id.historic_container, historicFragment)
                 .commit();
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detail_fragment, menu);
         return true;
@@ -106,6 +99,6 @@ public class DetailActivity extends ActionBarActivity {
 
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 }

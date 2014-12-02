@@ -12,7 +12,8 @@
         android:id="@+id/company_list_fragment_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null">
+        android:divider="@color/main_text_color"
+        android:dividerHeight="1dp">
     </ListView>
 
 </RelativeLayout>
