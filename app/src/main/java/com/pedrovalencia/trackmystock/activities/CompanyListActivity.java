@@ -3,8 +3,6 @@ package com.pedrovalencia.trackmystock.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.fragments.CompanyListFragment;
@@ -70,7 +68,7 @@ public class CompanyListActivity extends ActionBarActivity implements CompanyLis
         super.onResume();
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.company_list, menu);
@@ -88,7 +86,7 @@ public class CompanyListActivity extends ActionBarActivity implements CompanyLis
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public void onItemSelected(String name, String symbol, String lastUpdate,

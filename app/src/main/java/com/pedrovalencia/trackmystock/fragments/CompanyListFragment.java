@@ -1,5 +1,6 @@
 package com.pedrovalencia.trackmystock.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,12 +9,16 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.pedrovalencia.trackmystock.R;
+import com.pedrovalencia.trackmystock.activities.AddCompanyActivity;
 import com.pedrovalencia.trackmystock.adapters.CompanyListAdapter;
 import com.pedrovalencia.trackmystock.data.CompanyContract;
 
@@ -36,6 +41,7 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     private static final String[] COMPANY_COLUMNS = new String[] {
@@ -103,6 +109,8 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
 
+        //mListView.setItemChecked(mPosition, true);
+
         return rootView;
     }
 
@@ -116,6 +124,26 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
                 null,
                 null
         );
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.company_list, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if(id == R.id.action_add_company) {
+            Intent intent = new Intent(getActivity(), AddCompanyActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
