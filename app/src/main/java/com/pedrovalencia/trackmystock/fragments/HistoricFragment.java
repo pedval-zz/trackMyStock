@@ -33,13 +33,14 @@ public class HistoricFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSymbol = getActivity().getIntent().getStringExtra(DetailActivity.SYMBOL);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_historic, container, false);
+        mSymbol = getArguments().getString(DetailActivity.SYMBOL);
 
         return rootView;
     }

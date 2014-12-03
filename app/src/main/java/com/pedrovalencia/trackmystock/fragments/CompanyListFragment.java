@@ -31,11 +31,10 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
     private ListView mListView;
     private int mPosition;
 
-    private static final String SELECTED_KEY = "selected_key";
+    public static final String SELECTED_KEY = "selected_key";
 
     public interface Callback {
-        public void onItemSelected(String name, String symbol, String lastUpdate,
-                                   Double price, Double high, Double low);
+        public void onItemSelected(String symbol);
     }
 
     @Override
@@ -53,6 +52,7 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
     public void onResume() {
         super.onResume();
         getLoaderManager().restartLoader(0, null, this);
+
     }
 
     public CompanyListFragment() {
@@ -82,7 +82,9 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
         companyListAdapter = new CompanyListAdapter(getActivity(), null, 0);
         mListView = (ListView) rootView.findViewById(R.id.company_list_fragment_list_view);
         mListView.setAdapter(companyListAdapter);
-        mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        if(getActivity().findViewById(R.id.detail_id) != null) {
+            mListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        }
 
         //Attach onItemClickListener. This will be triggered each time the customer clicks on
         //one row
@@ -93,12 +95,8 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
                 Cursor cursor = companyListAdapter.getCursor();
                 if (cursor != null && cursor.moveToPosition(position)) {
 
-                    ((Callback)getActivity()).onItemSelected(cursor.getString(CompanyContract.CompanyEntry.COLUMN_NAME_POS),
-                            cursor.getString(CompanyContract.CompanyEntry.COLUMN_SYMBOL_POS),
-                            cursor.getString(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE_POS),
-                            cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_PRICE_POS),
-                            cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_HIGH_POS),
-                            cursor.getDouble(CompanyContract.CompanyEntry.COLUMN_LOW_POS));
+                    ((Callback)getActivity()).
+                            onItemSelected(cursor.getString(CompanyContract.CompanyEntry.COLUMN_SYMBOL_POS));
 
                 }
                 mPosition = position;
@@ -109,7 +107,6 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
         }
 
-        //mListView.setItemChecked(mPosition, true);
 
         return rootView;
     }
@@ -148,10 +145,25 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+
         companyListAdapter.swapCursor(cursor);
+        //For tablet version, we need to simulate on click
+        //on the proper position
+        if(getActivity().findViewById(R.id.detail_id) != null) {
+            //This is for the list view
+            mListView.setItemChecked(mPosition, true);
+
+            //And this for the detail and historic
+            //TODO to find a solution to refresh the Detail and Historic
+            /*((Callback)getActivity()).
+                    onItemSelected(cursor.getString(CompanyContract.CompanyEntry.COLUMN_SYMBOL_POS));*/
+
+        }
+
         if(mPosition != ListView.INVALID_POSITION) {
             mListView.smoothScrollToPosition(mPosition);
         }
+
     }
 
     @Override

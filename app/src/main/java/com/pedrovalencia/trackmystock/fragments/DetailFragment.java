@@ -31,11 +31,6 @@ import com.pedrovalencia.trackmystock.data.CompanyContract;
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private String mSymbol;
-    private String mName;
-    private String mLastUpdate;
-    private Double mPrice;
-    private Double mHigh;
-    private Double mLow;
 
     private static final String SELECTED_KEY = "selected_key";
 
@@ -106,29 +101,29 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         //Name (symbol) field
         TextView nameTextView = (TextView)getView().findViewById(R.id.detail_fragment_name_content);
         mSymbol = cursor.getString(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_SYMBOL));
-        mName = cursor.getString(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_NAME));
-        nameTextView.setText(mName + " (" + mSymbol + ")");
+        String name = cursor.getString(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_NAME));
+        nameTextView.setText(name + " (" + mSymbol + ")");
 
 
         //Price
         TextView priceTextView = (TextView)getView().findViewById(R.id.detail_fragment_price_content);
-        mPrice = cursor.getDouble(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_PRICE));
-        priceTextView.setText(String.valueOf(mPrice));
+        Double price = cursor.getDouble(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_PRICE));
+        priceTextView.setText(String.valueOf(price));
 
         //Last update
         TextView updateTextView = (TextView)getView().findViewById(R.id.detail_fragment_date_content);
-        mLastUpdate = cursor.getString(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE));
-        updateTextView.setText(mLastUpdate);
+        String lastUpdate = cursor.getString(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_LAST_UPDATE));
+        updateTextView.setText(lastUpdate);
 
         //High price
         TextView highTextView = (TextView)getView().findViewById(R.id.detail_fragment_high_content);
-        mHigh = cursor.getDouble(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_HIGH));
-        highTextView.setText(String.valueOf(mHigh));
+        Double high = cursor.getDouble(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_HIGH));
+        highTextView.setText(String.valueOf(high));
 
         //Low price
         TextView lowTextView = (TextView)getView().findViewById(R.id.detail_fragment_low_content);
-        mLow = cursor.getDouble(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_LOW));
-        lowTextView.setText(String.valueOf(mLow));
+        Double low = cursor.getDouble(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_LOW));
+        lowTextView.setText(String.valueOf(low));
 
     }
 
@@ -167,8 +162,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                     Cursor cursor = getActivity().getContentResolver().query(CompanyContract.CompanyEntry.CONTENT_URI, null, null, null, null);
                     Intent intent;
                     if(cursor.getCount() > 0) {
-
+                        Bundle arg = new Bundle();
+                        arg.putInt(SELECTED_KEY, 0);
                         intent = new Intent(getActivity().getApplicationContext(), CompanyListActivity.class);
+                        intent.putExtras(arg);
 
                     } else {
                         intent = new Intent(getActivity().getApplicationContext(), EmptyListActivity.class);
