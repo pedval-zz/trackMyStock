@@ -30,7 +30,8 @@ public class CompanyListActivity extends ActionBarActivity implements CompanyLis
 
             mSymbol = getIntent().getStringExtra(DetailActivity.SYMBOL);
 
-            if(mSymbol != null || mSymbol.isEmpty()) {
+            //Check if the we have already a company saved
+            if(mSymbol == null || mSymbol.isEmpty()) {
                 Cursor cursor = getContentResolver().query(
                         CompanyContract.CompanyEntry.CONTENT_URI,
                         null,

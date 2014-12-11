@@ -84,6 +84,8 @@ public class HistoricFragment extends Fragment {
                 graphView.addSeries(exampleSeries);
                 //Remove grid
                 graphView.getGraphViewStyle().setGridStyle(GraphViewStyle.GridStyle.NONE);
+                //TODO
+                //graphView.setHorizontalLabels();
 
                 LinearLayout layout = (LinearLayout) (getView().findViewById(R.id.chart_layout));
                 layout.addView(graphView);
