@@ -17,6 +17,7 @@ import com.jjoe64.graphview.GraphViewStyle;
 import com.jjoe64.graphview.LineGraphView;
 import com.pedrovalencia.trackmystock.R;
 import com.pedrovalencia.trackmystock.activities.DetailActivity;
+import com.pedrovalencia.trackmystock.domain.Historic;
 import com.pedrovalencia.trackmystock.util.CompanySearchUtil;
 
 import java.util.ArrayList;
@@ -58,21 +59,33 @@ public class HistoricFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    private class RetrieveHistoric extends AsyncTask<String, Void, ArrayList<Double>> {
+    private class RetrieveHistoric extends AsyncTask<String, Void, ArrayList<Historic>> {
 
         private ProgressDialog progress;
 
         @Override
-        protected void onPostExecute(ArrayList<Double> result) {
+        protected void onPostExecute(ArrayList<Historic> result) {
             super.onPostExecute(result);
             progress.dismiss();
 
             if(result != null && result.size() > 0) {
 
                 GraphView.GraphViewData[] data = new GraphView.GraphViewData[result.size()];
+                String[] dateArray = new String[result.size()];
+                String historicMode = CompanySearchUtil.getHistoricValue(getActivity());
+                //By default we will print date in x label (when week selected)
+                int rangeXLabelDate = 2;
+                if(historicMode.equals("month")) {
+                    rangeXLabelDate = 5;
+                }
                 for (int i = 0; i < result.size(); i++) {
-                    data[i] = new GraphView.GraphViewData(i + 1, result.get(i));
-                    
+                    Double value = result.get(result.size() - 1 - i).getValue();
+                    data[i] = new GraphView.GraphViewData(i, value);
+                    if(i % rangeXLabelDate == 0) {
+                        dateArray[i] = result.get(result.size() - 1 - i).getDate();
+                    } else {
+                        dateArray[i] = "";
+                    }
                 }
 
                 // init example series data
@@ -85,7 +98,7 @@ public class HistoricFragment extends Fragment {
                 //Remove grid
                 graphView.getGraphViewStyle().setGridStyle(GraphViewStyle.GridStyle.NONE);
                 //TODO
-                //graphView.setHorizontalLabels();
+                graphView.setHorizontalLabels(dateArray);
 
                 LinearLayout layout = (LinearLayout) (getView().findViewById(R.id.chart_layout));
                 layout.addView(graphView);
@@ -102,9 +115,9 @@ public class HistoricFragment extends Fragment {
         }
 
         @Override
-        protected ArrayList<Double> doInBackground(String... params) {
+        protected ArrayList<Historic> doInBackground(String... params) {
             // Bring info for this company
-            ArrayList<Double> historic = CompanySearchUtil.getHistoric(params[0], params[1]);
+            ArrayList<Historic> historic = CompanySearchUtil.getHistoric(params[0], params[1]);
 
             return historic;
         }

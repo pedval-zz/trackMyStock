@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.pedrovalencia.trackmystock.domain.CompanyDetail;
 import com.pedrovalencia.trackmystock.domain.CompanySignature;
+import com.pedrovalencia.trackmystock.domain.Historic;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -192,13 +193,13 @@ public class CompanySearchUtil {
 
     }
 
-    public static ArrayList<Double> getHistoric(String symbol, String historicValue) {
+    public static ArrayList<Historic> getHistoric(String symbol, String historicValue) {
         //Connection object
         HttpURLConnection conn = null;
         //Contains the JSON response
         StringBuilder jsonResults = new StringBuilder();
 
-        ArrayList<Double> historic;
+        ArrayList<Historic> historic;
 
         Integer[] todayDate = getTodayDate();
         Integer[] fromDate = getFromDate(historicValue);
@@ -253,12 +254,14 @@ public class CompanySearchUtil {
                     getJSONObject("results").getJSONArray("row");
 
             //First result row is the column name
-            historic = new ArrayList<Double>(jsonArray.length() - 1);
+            historic = new ArrayList<Historic>(jsonArray.length() - 1);
             // Extract the Place descriptions from the results
             for(int i=1; i < jsonArray.length(); i++) {
                 if(jsonArray.getJSONObject(i).has("col1") &&
                         isDouble((String)jsonArray.getJSONObject(i).get("col1"))) {
-                    historic.add(jsonArray.getJSONObject(i).getDouble("col1"));
+                    Historic oneHistoric = new Historic(jsonArray.getJSONObject(i).getDouble("col1"),
+                            jsonArray.getJSONObject(i).getString("col0"));
+                    historic.add(oneHistoric);
                 }
             }
 
