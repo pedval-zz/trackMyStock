@@ -1,10 +1,12 @@
 package com.pedrovalencia.trackmystock.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
 import com.pedrovalencia.trackmystock.R;
+import com.pedrovalencia.trackmystock.data.CompanyContract;
 import com.pedrovalencia.trackmystock.fragments.CompanyListFragment;
 import com.pedrovalencia.trackmystock.fragments.DetailFragment;
 import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
@@ -27,6 +29,20 @@ public class CompanyListActivity extends ActionBarActivity implements CompanyLis
             mTwoPane = true;
 
             mSymbol = getIntent().getStringExtra(DetailActivity.SYMBOL);
+
+            if(mSymbol != null || mSymbol.isEmpty()) {
+                Cursor cursor = getContentResolver().query(
+                        CompanyContract.CompanyEntry.CONTENT_URI,
+                        null,
+                        null,
+                        null,
+                        null);
+
+                if(cursor.moveToFirst()) {
+                    mSymbol = cursor.getString(cursor.getColumnIndex(CompanyContract.CompanyEntry.COLUMN_SYMBOL));
+                }
+                cursor.close();
+            }
             Bundle args = new Bundle();
             args.putString(DetailActivity.SYMBOL, mSymbol);
 
