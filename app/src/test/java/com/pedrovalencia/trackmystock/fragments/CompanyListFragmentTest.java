@@ -158,7 +158,8 @@ public class CompanyListFragmentTest {
         assertTrue("There is no ListView in the Fragment", view != null);
     }
 
-   /* @Test
+    @Test
+    @Config(qualifiers = "v10")
     public void testGoToDetailActivity() throws Exception {
 
         //We first a element.
@@ -172,17 +173,16 @@ public class CompanyListFragmentTest {
         contentValues1.put(CompanyContract.CompanyEntry.COLUMN_LOW, 30.12);
         contentValues1.put(CompanyContract.CompanyEntry.COLUMN_CHANGE, "+2.32");
 
-        ActivityController<CompanyListActivity> activityController =
-                Robolectric.buildActivity(CompanyListActivity.class).create();
-        Activity activity = activityController.get();
-        companyListFragment.onAttach(activity);
 
-        //FragmentActivity fa = companyListFragment.getActivity();
+        ActivityController<CompanyListActivity> activityController =
+                Robolectric.buildActivity(CompanyListActivity.class).create().start().resume();
+        Activity activity = activityController.get();
+
         activity.getContentResolver().insert(CompanyContract.CompanyEntry.CONTENT_URI,
                 contentValues1);
 
 
-        ListView listView = (ListView)companyListFragment.getView().findViewById(R.id.company_list_fragment_list_view);
+        ListView listView = (ListView)activity.findViewById(R.id.company_list_fragment_list_view);
 
         assertTrue("Class is: "+ listView.getClass().getSimpleName(), listView.getClass().getSimpleName().equals("ListView"));
 
@@ -193,12 +193,6 @@ public class CompanyListFragmentTest {
         assertTrue("Type of activity is not DetailActivity class: "+intent.getComponent().getClassName(),
                 intent.getComponent().getClassName().equals(DetailActivity.class.getCanonicalName()));
 
-    }*/
-
-
-
-
-
-
+    }
 
 }
