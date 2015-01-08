@@ -49,6 +49,7 @@ public class CompanyListFragmentTest {
 
     @After
     public void tearDown() {
+        companyListFragment.onDestroy();
     }
 
     @Test
@@ -163,7 +164,6 @@ public class CompanyListFragmentTest {
     public void testGoToDetailActivity() throws Exception {
 
         //We first a element.
-
         ContentValues contentValues1 = new ContentValues();
         contentValues1.put(CompanyContract.CompanyEntry.COLUMN_SYMBOL, "GOOG");
         contentValues1.put(CompanyContract.CompanyEntry.COLUMN_NAME, "Google Inc.");
