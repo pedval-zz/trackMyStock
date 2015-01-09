@@ -3,6 +3,7 @@ package com.pedrovalencia.trackmystock.fragments;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -69,7 +70,52 @@ public class DetailFragmentTest {
     }
 
     @Test
+    @Config(qualifiers = "v10")
     public void testFragmentContainsGoodValues() throws Exception {
+
+        ContentValues contentValues1 = getBasicContentValue();
+        Bundle bundle = new Bundle();
+        bundle.putString(DetailActivity.SYMBOL, "GOOG");
+
+        DetailFragment detailFragment1 = new DetailFragment();
+        detailFragment1.setArguments(bundle);
+        FragmentTestUtil.startFragment(detailFragment1);
+        detailFragment1.getActivity().getContentResolver().insert(CompanyContract.CompanyEntry.CONTENT_URI,
+                contentValues1);
+
+
+        detailFragment1.onResume();
+
+        Bundle bundle1 = detailFragment1.getArguments();
+
+        String code = bundle1.getString(DetailActivity.SYMBOL);
+
+        assertTrue("Code is not correct: "+code, "GOOG".equals(code));
+
+        //Name
+        TextView nameTextView = (TextView)detailFragment1.getView().findViewById(R.id.detail_fragment_name_content);
+        assertNotNull("Name field is null", nameTextView);
+        assertTrue("Name is not the correct one: "+nameTextView.getText().toString(), "Google Inc. (GOOG)".equals(nameTextView.getText().toString()));
+
+        //Price
+        TextView priceTextView = (TextView)detailFragment1.getView().findViewById(R.id.detail_fragment_price_content);
+        assertNotNull("Price field is null", priceTextView);
+        assertTrue("Price is not the correct one: "+priceTextView.getText().toString(), "30.2".equals(priceTextView.getText().toString()));
+
+        //Date
+        TextView dateTextView = (TextView)detailFragment1.getView().findViewById(R.id.detail_fragment_date_content);
+        assertNotNull("Date field is null", dateTextView);
+        assertTrue("Date is not the correct one: "+dateTextView.getText().toString(), "10272014".equals(dateTextView.getText().toString()));
+
+        //High price
+        TextView highTextView = (TextView)detailFragment1.getView().findViewById(R.id.detail_fragment_high_content);
+        assertNotNull("High price field is null", highTextView);
+        assertTrue("High price is not the correct one: "+highTextView.getText().toString(), "32.15".equals(highTextView.getText().toString()));
+
+        //Low price
+        TextView lowTextView = (TextView)detailFragment1.getView().findViewById(R.id.detail_fragment_low_content);
+        assertNotNull("Low price field is null", lowTextView);
+        assertTrue("Low price is not the correct one: "+lowTextView.getText().toString(), "30.12".equals(lowTextView.getText().toString()));
 
     }
 
