@@ -9,15 +9,9 @@ import com.pedrovalencia.trackmystock.fragments.HistoricFragment;
 
 public class DetailActivity extends ActionBarActivity {
 
-    public static final String NAME = "name";
     public static final String SYMBOL = "symbol";
-    public static final String PRICE = "price";
-    public static final String HIGH = "high";
-    public static final String LOW = "low";
-    public static final String LAST_UPDATE = "update";
 
     private String mSymbol;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

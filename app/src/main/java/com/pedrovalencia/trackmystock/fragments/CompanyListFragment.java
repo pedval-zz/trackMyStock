@@ -152,12 +152,6 @@ public class CompanyListFragment extends Fragment implements LoaderManager.Loade
         if(getActivity().findViewById(R.id.detail_id) != null) {
             //This is for the list view
             mListView.setItemChecked(mPosition, true);
-
-            //And this for the detail and historic
-            //TODO to find a solution to refresh the Detail and Historic
-            /*((Callback)getActivity()).
-                    onItemSelected(cursor.getString(CompanyContract.CompanyEntry.COLUMN_SYMBOL_POS));*/
-
         }
 
         if(mPosition != ListView.INVALID_POSITION) {
